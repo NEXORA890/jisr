@@ -1,0 +1,1354 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="جسر: منصة لفرق العمل عن بعد لنقل الملفات بين الإدارات وحساب رواتب الموظفين والمحادثة ولوحة للإدارة العامة.">
+<title>جسر</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Reem+Kufi:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column that mirrors with the language. Hero text, a working product window with four tabs, one pricing plan. Two overlays: first-visit intro and language picker. */
+:root {
+  --bg: #F2F5F8;
+  --surface: #FFFFFF;
+  --surface-2: #E8EEF3;
+  --ink: #0F2A3D;
+  --ink-2: #4A6072;
+  --line: #D5DEE6;
+  --accent: #E8A317;
+  --on-accent: #2A1C00;
+  --btn-bg: #0F2A3D;
+  --btn-fg: #FFFFFF;
+  --good: #1B6E4A;
+  --good-bg: #DCF0E5;
+  --warn: #8A5200;
+  --warn-bg: #FBEBCB;
+  --bad: #A8322B;
+  --bad-bg: #F8DDDA;
+  --mine: #DDE8F3;
+  --scrim: rgba(7, 14, 21, 0.6);
+  --font-display: "Bricolage Grotesque", "Reem Kufi", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-num: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B141D;
+    --surface: #121F2B;
+    --surface-2: #192A39;
+    --ink: #E7EEF5;
+    --ink-2: #9DB0C1;
+    --line: #243747;
+    --accent: #F0B43C;
+    --on-accent: #2A1C00;
+    --btn-bg: #E7EEF5;
+    --btn-fg: #0B141D;
+    --good: #6FD0A0;
+    --good-bg: #163527;
+    --warn: #F0B43C;
+    --warn-bg: #3A2C0E;
+    --bad: #F08A82;
+    --bad-bg: #3A1A18;
+    --mine: #1B3247;
+    --scrim: rgba(0, 0, 0, 0.7);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B141D;
+  --surface: #121F2B;
+  --surface-2: #192A39;
+  --ink: #E7EEF5;
+  --ink-2: #9DB0C1;
+  --line: #243747;
+  --accent: #F0B43C;
+  --on-accent: #2A1C00;
+  --btn-bg: #E7EEF5;
+  --btn-fg: #0B141D;
+  --good: #6FD0A0;
+  --good-bg: #163527;
+  --warn: #F0B43C;
+  --warn-bg: #3A2C0E;
+  --bad: #F08A82;
+  --bad-bg: #3A1A18;
+  --mine: #1B3247;
+  --scrim: rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html.lock { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  direction: rtl;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  padding-block: 0 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+:root[dir="ltr"] body { direction: ltr; }
+.wrap { max-width: 1080px; margin-inline: auto; }
+h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; text-wrap: balance; line-height: 1.3; }
+p { margin: 0; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mono { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+
+/* header */
+.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding-block: 20px; }
+.logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 26px; text-decoration: none; color: var(--ink); }
+.logo svg { width: 34px; height: 24px; }
+.nav { display: flex; align-items: center; gap: 8px 18px; flex-wrap: wrap; }
+.nav a, .linklike { color: var(--ink-2); text-decoration: none; font-size: 15px; }
+.nav a:hover, .linklike:hover { color: var(--ink); }
+.linklike { border: 0; background: transparent; cursor: pointer; padding: 0; }
+.nav a.btn { color: var(--btn-fg); }
+.langbtn { display: inline-flex; align-items: center; gap: 6px; }
+.langbtn svg { width: 18px; height: 18px; }
+.langbtn span { font-family: var(--font-num); font-size: 13px; }
+.banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--warn-bg); color: var(--warn); border-radius: 10px; padding: 8px 14px; font-size: 14px; margin-bottom: 8px; }
+
+/* buttons */
+.btn { padding: 9px 18px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; text-decoration: none; display: inline-block; line-height: 1.5; }
+.btn:hover { border-color: var(--ink-2); }
+.btn.primary { background: var(--btn-bg); color: var(--btn-fg); border-color: transparent; }
+.btn.accent { background: var(--accent); color: var(--on-accent); border-color: transparent; font-weight: 600; }
+.btn.small { padding: 4px 12px; font-size: 14px; }
+.btn.quiet { border-color: transparent; background: transparent; color: var(--ink-2); }
+
+/* hero */
+.hero { padding-block: 36px 32px; display: grid; gap: 20px; }
+.hero h1 { font-size: clamp(32px, 5.4vw, 54px); font-weight: 700; max-width: 15em; }
+.hero p { color: var(--ink-2); font-size: 18px; max-width: 38em; }
+.hero .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+
+/* product window */
+.demo-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: 14px; }
+.demo-head h2 { font-size: 24px; }
+.tag { font-size: 13px; padding: 2px 10px; border-radius: 20px; background: var(--warn-bg); color: var(--warn); }
+.window { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.tabs { display: flex; gap: 4px; padding: 8px 12px 0; border-bottom: 1px solid var(--line); background: var(--surface-2); overflow-x: auto; }
+.tab { border: 0; background: transparent; padding: 10px 18px; cursor: pointer; color: var(--ink-2); border-bottom: 3px solid transparent; white-space: nowrap; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
+.panel { padding: 20px; }
+.panel h3 { font-size: 19px; margin-bottom: 4px; }
+.sub { color: var(--ink-2); font-size: 14px; margin-bottom: 14px; }
+.sec { font-size: 17px; margin: 24px 0 10px; }
+.cols { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+.box { border: 1px solid var(--line); border-radius: 10px; padding: 16px; background: var(--bg); }
+.box h3 { font-size: 17px; margin-bottom: 10px; }
+
+/* forms */
+.field { display: grid; gap: 4px; margin-bottom: 12px; min-width: 0; }
+.field label { font-size: 14px; color: var(--ink-2); }
+input[type="text"], input[type="number"], input[type="email"], input[type="search"], input[type="file"], select {
+  width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); min-width: 0;
+}
+input[type="file"] { padding: 6px; font-size: 14px; }
+.err { color: var(--bad); font-size: 14px; min-height: 1.4em; margin-bottom: 6px; }
+
+/* files and lists */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 20px; padding: 4px 14px; cursor: pointer; font-size: 14px; display: inline-flex; gap: 8px; align-items: center; }
+.chip[aria-pressed="true"] { background: var(--btn-bg); color: var(--btn-fg); border-color: transparent; }
+.count { font-family: var(--font-num); font-size: 12px; background: var(--accent); color: var(--on-accent); border-radius: 10px; padding: 0 7px; line-height: 1.6; }
+.files { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.file { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; background: var(--surface); }
+.file.one { grid-template-columns: minmax(0, 1fr); }
+.file-name { font-weight: 500; overflow-wrap: anywhere; }
+.file-meta { display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: 13px; color: var(--ink-2); }
+.ann-body { font-size: 14px; color: var(--ink-2); }
+.ref { font-family: var(--font-num); font-size: 12px; color: var(--ink-2); direction: ltr; unicode-bidi: isolate; }
+.file-side { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.pill { font-size: 13px; padding: 1px 10px; border-radius: 20px; white-space: nowrap; }
+.pill.pending { background: var(--warn-bg); color: var(--warn); }
+.pill.received, .pill.approved { background: var(--good-bg); color: var(--good); }
+.pill.rejected { background: var(--bad-bg); color: var(--bad); }
+.empty { color: var(--ink-2); padding: 18px 4px; }
+
+/* payroll and tables */
+.rates { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; margin-bottom: 14px; }
+.rates .field { margin: 0; width: 150px; }
+.totals { display: flex; flex-wrap: wrap; gap: 10px 36px; margin: 14px 0; }
+.total span { display: block; font-size: 13px; color: var(--ink-2); }
+.total b { font-family: var(--font-num); font-weight: 500; font-size: 22px; font-variant-numeric: tabular-nums; }
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 900px; font-size: 15px; }
+table.gm-table { min-width: 460px; }
+th, td { padding: 8px 12px; text-align: start; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-weight: 500; color: var(--ink-2); font-size: 13px; background: var(--surface-2); }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: end; font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+th.num { font-family: var(--font-body); }
+td input { width: 76px; padding: 4px 8px; font-family: var(--font-num); text-align: end; }
+td .dept { display: block; font-size: 12px; color: var(--ink-2); }
+td.net { font-weight: 500; }
+.formula { font-size: 13px; color: var(--ink-2); margin-top: 10px; }
+.add { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px 12px; align-items: end; margin-top: 16px; }
+.add .field { margin: 0; }
+
+/* chat */
+.chat { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 20px; }
+.channels { display: grid; gap: 4px; align-content: start; }
+.channel { text-align: start; border: 0; background: transparent; padding: 8px 12px; border-radius: 8px; cursor: pointer; color: var(--ink-2); }
+.channel[aria-pressed="true"] { background: var(--surface-2); color: var(--ink); font-weight: 600; }
+.msgs { height: 300px; overflow-y: auto; border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: var(--bg); }
+.msg { max-width: 78%; padding: 8px 12px; border-radius: 10px; background: var(--surface-2); align-self: flex-start; }
+.msg.mine { align-self: flex-end; background: var(--mine); }
+.msg .who { font-size: 12px; color: var(--ink-2); display: flex; gap: 10px; }
+.msg .who time { font-family: var(--font-num); }
+.send { display: flex; gap: 10px; margin-top: 10px; }
+.send input { flex: 1; }
+
+/* pricing */
+.pricing { padding-block: 64px 8px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 36px; align-items: start; }
+.pricing h2 { font-size: clamp(26px, 4vw, 38px); margin-bottom: 12px; }
+.pricing .lead { color: var(--ink-2); max-width: 30em; }
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 26px; }
+.plan .name { color: var(--ink-2); font-size: 15px; }
+.price { font-family: var(--font-num); font-size: 52px; font-weight: 500; line-height: 1.2; margin: 6px 0 2px; }
+.price small { font-family: var(--font-body); font-size: 16px; color: var(--ink-2); margin-inline-start: 8px; }
+.plan ul { list-style: none; padding: 0; margin: 18px 0 22px; display: grid; gap: 10px; }
+.plan li { display: flex; gap: 10px; align-items: baseline; }
+.plan li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; transform: translateY(-1px); }
+.plan .btn { width: 100%; text-align: center; padding: 11px 18px; }
+.checkout { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 18px; }
+.note { font-size: 13px; color: var(--ink-2); margin-top: 10px; }
+.done { background: var(--good-bg); color: var(--good); padding: 12px 14px; border-radius: 10px; }
+
+footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 14px; }
+
+/* overlays */
+.ov {
+  position: fixed; inset: 0; z-index: 50; background: var(--scrim); display: grid; place-items: center;
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+}
+#lang-ov { z-index: 60; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; width: 100%; max-width: 580px; max-height: 100%; overflow: auto; padding: 28px; position: relative; }
+.card h2 { font-size: 28px; margin: 14px 0 10px; padding-inline-end: 36px; }
+.card .lead2 { color: var(--ink-2); }
+.x { position: absolute; top: 12px; inset-inline-end: 12px; width: 34px; height: 34px; border-radius: 8px; border: 0; background: transparent; cursor: pointer; font-size: 22px; line-height: 1; color: var(--ink-2); }
+.x:hover { background: var(--surface-2); color: var(--ink); }
+.stats { display: flex; flex-wrap: wrap; gap: 12px 30px; margin: 20px 0; }
+.stat b { font-family: var(--font-num); font-size: 26px; font-weight: 500; display: block; line-height: 1.2; }
+.stat span { font-size: 13px; color: var(--ink-2); }
+.quick-lab { font-size: 14px; color: var(--ink-2); margin-bottom: 8px; }
+.card .chips { margin-bottom: 22px; }
+.card.lang { display: flex; flex-direction: column; overflow: hidden; max-height: min(680px, 100%); }
+.card.lang h2 { margin-top: 0; font-size: 24px; }
+.langs { list-style: none; margin: 12px 0 0; padding: 0; overflow-y: auto; flex: 1; min-height: 0; border-top: 1px solid var(--line); }
+.lang-item { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; width: 100%; text-align: start; padding: 9px 10px; border: 0; background: transparent; border-radius: 8px; cursor: pointer; }
+.lang-item:hover, .lang-item[aria-pressed="true"] { background: var(--surface-2); }
+.lang-item[aria-pressed="true"] .ln { font-weight: 600; }
+.ln { flex: 1; min-width: 0; }
+.lm { color: var(--ink-2); font-size: 13px; }
+.lc { font-family: var(--font-num); font-size: 12px; color: var(--ink-2); min-width: 32px; text-align: end; }
+.lang-meta { font-size: 13px; color: var(--ink-2); margin-top: 10px; }
+
+@media (max-width: 800px) {
+  .cols, .pricing { grid-template-columns: minmax(0, 1fr); }
+  .chat { grid-template-columns: minmax(0, 1fr); }
+  .channels { grid-auto-flow: column; grid-auto-columns: max-content; overflow-x: auto; }
+  .panel { padding: 14px; }
+  .msg { max-width: 92%; }
+  .card { padding: 22px 18px; }
+}
+[hidden] { display: none !important; }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#top-of-page">
+      <svg viewBox="0 0 34 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M2 20h30M5 20C8 6 26 6 29 20M12 20v-8M17 20V9M22 20v-8"/></svg>
+      <span data-i="brand"></span>
+    </a>
+    <nav class="nav" data-al="nav.aria">
+      <a href="#demo" data-i="nav.demo"></a>
+      <a href="#pricing" data-i="nav.pricing"></a>
+      <button class="linklike" id="about-btn" type="button" data-i="nav.about"></button>
+      <button class="btn small langbtn" id="lang-btn" type="button" aria-haspopup="dialog" data-al="lang.open">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+        <span id="lang-code"></span>
+      </button>
+      <a class="btn primary small" href="#pricing" data-i="nav.subscribe"></a>
+    </nav>
+  </header>
+
+  <div class="banner" id="notice" role="status" hidden>
+    <span id="notice-t"></span>
+    <button class="x" style="position: static" id="notice-x" type="button" data-al="intro.close">×</button>
+  </div>
+
+  <section class="hero" id="top-of-page">
+    <h1 data-i="hero.h1"></h1>
+    <p data-i="hero.p"></p>
+    <div class="cta">
+      <a class="btn accent" href="#pricing" data-i="hero.cta1"></a>
+      <a class="btn" href="#demo" data-i="hero.cta2"></a>
+    </div>
+  </section>
+
+  <section id="demo" aria-labelledby="demo-title">
+    <div class="demo-head">
+      <h2 id="demo-title" data-i="demo.company"></h2>
+      <span class="tag" data-i="demo.tag"></span>
+    </div>
+
+    <div class="window">
+      <div class="tabs" role="tablist" data-al="tabs.aria">
+        <button class="tab" role="tab" id="tab-files" aria-controls="panel-files" aria-selected="true" data-tab="files" data-i="tab.files"></button>
+        <button class="tab" role="tab" id="tab-pay" aria-controls="panel-pay" aria-selected="false" data-tab="pay" tabindex="-1" data-i="tab.pay"></button>
+        <button class="tab" role="tab" id="tab-chat" aria-controls="panel-chat" aria-selected="false" data-tab="chat" tabindex="-1" data-i="tab.chat"></button>
+        <button class="tab" role="tab" id="tab-gm" aria-controls="panel-gm" aria-selected="false" data-tab="gm" tabindex="-1" data-i="tab.gm"></button>
+      </div>
+
+      <!-- files -->
+      <div class="panel" id="panel-files" role="tabpanel" aria-labelledby="tab-files">
+        <h3 data-i="files.h"></h3>
+        <p class="sub" data-i="files.sub"></p>
+        <div class="cols">
+          <div>
+            <div class="chips" id="chips" role="group" data-al="files.filterAria"></div>
+            <ul class="files" id="files"></ul>
+          </div>
+          <form class="box" id="send-form" novalidate>
+            <h3 data-i="files.sendH"></h3>
+            <div class="field"><label for="file-input" data-i="files.file"></label><input type="file" id="file-input"></div>
+            <div class="field"><label for="from" data-i="files.from"></label><select id="from"></select></div>
+            <div class="field"><label for="to" data-i="files.to"></label><select id="to"></select></div>
+            <div class="err" id="send-err" role="alert"></div>
+            <button class="btn primary" type="submit" data-i="files.send"></button>
+          </form>
+        </div>
+      </div>
+
+      <!-- payroll -->
+      <div class="panel" id="panel-pay" role="tabpanel" aria-labelledby="tab-pay" hidden>
+        <h3 data-i="pay.h"></h3>
+        <p class="sub" data-i="pay.sub"></p>
+        <div class="rates">
+          <div class="field"><label for="rate-tax" data-i="pay.tax"></label><input type="number" id="rate-tax" min="0" max="60" step="1" value="10"></div>
+          <div class="field"><label for="rate-ins" data-i="pay.ins"></label><input type="number" id="rate-ins" min="0" max="40" step="1" value="9"></div>
+        </div>
+        <div class="totals" aria-live="polite">
+          <div class="total"><span data-i="pay.tGross"></span><b id="t-gross"></b></div>
+          <div class="total"><span data-i="pay.tDed"></span><b id="t-ded"></b></div>
+          <div class="total"><span data-i="pay.tNet"></span><b id="t-net"></b></div>
+        </div>
+        <div class="scroll">
+          <table>
+            <thead><tr>
+              <th data-i="pay.cEmp"></th><th data-i="pay.country"></th><th class="num" data-i="pay.cBase"></th><th class="num" data-i="pay.cDays"></th><th class="num" data-i="pay.cOt"></th><th class="num" data-i="pay.cBonus"></th><th class="num" data-i="pay.cDed"></th><th class="num" data-i="pay.cNet"></th><th></th>
+            </tr></thead>
+            <tbody id="pay-body"></tbody>
+          </table>
+        </div>
+        <p class="formula" data-i="pay.formula"></p>
+        <form class="add" id="add-form" novalidate>
+          <div class="field"><label for="e-name" data-i="pay.name"></label><input type="text" id="e-name" data-ph="pay.namePh"></div>
+          <div class="field"><label for="e-dept" data-i="pay.dept"></label><select id="e-dept"></select></div>
+          <div class="field"><label for="e-country" data-i="pay.country"></label><select id="e-country"></select></div>
+          <div class="field"><label for="e-base" data-i="pay.cBase"></label><input type="number" id="e-base" min="0" step="50" placeholder="2500"></div>
+          <button class="btn primary" type="submit" data-i="pay.add"></button>
+        </form>
+        <div class="err" id="add-err" role="alert"></div>
+      </div>
+
+      <!-- chat -->
+      <div class="panel" id="panel-chat" role="tabpanel" aria-labelledby="tab-chat" hidden>
+        <h3 data-i="chat.h"></h3>
+        <p class="sub" data-i="chat.sub"></p>
+        <div class="chat">
+          <div class="channels" id="channels" role="group" data-al="chat.chAria"></div>
+          <div>
+            <div class="msgs" id="msgs" aria-live="polite"></div>
+            <form class="send" id="chat-form" novalidate>
+              <input type="text" id="chat-input" data-ph="chat.ph" data-al="chat.msgAria">
+              <button class="btn primary" type="submit" data-i="chat.send"></button>
+            </form>
+            <div class="err" id="chat-err" role="alert"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- general management -->
+      <div class="panel" id="panel-gm" role="tabpanel" aria-labelledby="tab-gm" hidden>
+        <h3 data-i="gm.h"></h3>
+        <p class="sub" data-i="gm.sub"></p>
+        <div class="totals" aria-live="polite">
+          <div class="total"><span data-i="gm.kEmps"></span><b id="k-emps"></b></div>
+          <div class="total"><span data-i="gm.kPay"></span><b id="k-pay"></b></div>
+          <div class="total"><span data-i="gm.kFiles"></span><b id="k-files"></b></div>
+          <div class="total"><span data-i="gm.kAppr"></span><b id="k-appr"></b></div>
+        </div>
+        <div class="cols">
+          <div>
+            <h4 class="sec" style="margin-top: 0" data-i="gm.deptH"></h4>
+            <div class="scroll">
+              <table class="gm-table">
+                <thead><tr><th data-i="pay.dept"></th><th class="num" data-i="gm.kEmps"></th><th class="num" data-i="gm.kPay"></th><th class="num" data-i="gm.cPend"></th></tr></thead>
+                <tbody id="gm-body"></tbody>
+              </table>
+            </div>
+            <h4 class="sec" data-i="gm.apprH"></h4>
+            <ul class="files" id="appr"></ul>
+          </div>
+          <div>
+            <form class="box" id="ann-form" novalidate>
+              <h3 data-i="gm.annH"></h3>
+              <div class="field"><label for="ann-title" data-i="gm.annTitle"></label><input type="text" id="ann-title"></div>
+              <div class="field"><label for="ann-body" data-i="gm.annBody"></label><input type="text" id="ann-body"></div>
+              <div class="field"><label for="ann-to" data-i="gm.annTo"></label><select id="ann-to"></select></div>
+              <div class="err" id="ann-err" role="alert"></div>
+              <button class="btn primary" type="submit" data-i="gm.annPub"></button>
+              <p class="note" data-i="gm.annNote"></p>
+            </form>
+            <h4 class="sec" data-i="gm.annList"></h4>
+            <ul class="files" id="ann-list"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing" aria-labelledby="price-title">
+    <div>
+      <h2 id="price-title" data-i="price.h"></h2>
+      <p class="lead" data-i="price.lead"></p>
+    </div>
+    <div class="plan">
+      <div class="name" data-i="plan.name"></div>
+      <div class="price"><span dir="ltr">$199</span><small data-i="price.per"></small></div>
+      <ul>
+        <li data-i="plan.f1"></li>
+        <li data-i="plan.f2"></li>
+        <li data-i="plan.f3"></li>
+        <li data-i="plan.f4"></li>
+        <li id="plan-f5"></li>
+      </ul>
+      <button class="btn accent" id="buy" type="button" aria-expanded="false" aria-controls="checkout" data-i="buy"></button>
+      <div class="checkout" id="checkout" hidden>
+        <form id="buy-form" novalidate>
+          <div class="field"><label for="co-name" data-i="co.name"></label><input type="text" id="co-name" data-ph="demo.company"></div>
+          <div class="field"><label for="co-mail" data-i="co.mail"></label><input type="email" id="co-mail" placeholder="name@company.com" dir="ltr"></div>
+          <div class="field"><label for="co-country" data-i="co.country"></label><select id="co-country"></select></div>
+          <div class="err" id="buy-err" role="alert"></div>
+          <button class="btn primary" type="submit" data-i="co.confirm"></button>
+        </form>
+        <div class="done" id="buy-done" hidden></div>
+      </div>
+      <p class="note" data-i="plan.note"></p>
+    </div>
+  </section>
+
+  <footer data-i="footer"></footer>
+</div>
+
+<!-- first-visit intro -->
+<div class="ov" id="intro" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+    <button class="x" id="intro-x" type="button" data-al="intro.close">×</button>
+    <div class="logo">
+      <svg viewBox="0 0 34 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M2 20h30M5 20C8 6 26 6 29 20M12 20v-8M17 20V9M22 20v-8"/></svg>
+      <span data-i="brand"></span>
+    </div>
+    <h2 id="intro-title" data-i="intro.title"></h2>
+    <p class="lead2" data-i="intro.p"></p>
+    <div class="stats">
+      <div class="stat"><b id="st-lang"></b><span data-i="intro.statLang"></span></div>
+      <div class="stat"><b id="st-cc"></b><span data-i="intro.statCountry"></span></div>
+      <div class="stat"><b dir="ltr">$199</b><span data-i="intro.statPrice"></span></div>
+    </div>
+    <div class="quick-lab" data-i="intro.langLabel"></div>
+    <div class="chips" id="quick" role="group" data-al="intro.langLabel"></div>
+    <button class="btn accent" id="intro-start" type="button" data-focus data-i="intro.start"></button>
+  </div>
+</div>
+
+<!-- language picker -->
+<div class="ov" id="lang-ov" hidden>
+  <div class="card lang" role="dialog" aria-modal="true" aria-labelledby="lang-title">
+    <button class="x" id="lang-x" type="button" data-al="intro.close">×</button>
+    <h2 id="lang-title" data-i="lang.title"></h2>
+    <div class="field" style="margin-bottom: 0"><input type="search" id="lang-q" data-focus data-ph="lang.search" data-al="lang.search" autocomplete="off"></div>
+    <div class="lang-meta" id="lang-count"></div>
+    <ul class="langs" id="lang-list"></ul>
+    <p class="empty" id="lang-none" data-i="lang.none" hidden></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  var I18N = {
+    ar: {
+      "brand": "جسر", "nav.aria": "التنقل", "nav.about": "عن المنصة", "nav.demo": "جرّب المنصة", "nav.pricing": "الاشتراك", "nav.subscribe": "اشترك الآن",
+      "lang.open": "تغيير اللغة", "lang.title": "اختر اللغة", "lang.search": "ابحث عن لغة", "lang.none": "لا توجد لغة بهذا الاسم.", "lang.full": "واجهة مترجمة",
+      "lang.fallback": "واجهة هذه اللغة غير مترجمة بعد، لذلك تُعرض بالإنجليزية. حُفظ اختيارك.", "lang.count": "{n} لغة",
+      "hero.h1": "ملفات الإدارات ورواتب الموظفين في مكان واحد",
+      "hero.p": "منصة لفرق العمل عن بعد. انقل الملفات بين الإدارات وتتبّع من استلمها، واحسب رواتب الموظفين مع خصوماتها، وتحدّث مع كل إدارة، وامنح الإدارة العامة لوحة واحدة للموافقات والتعاميم.",
+      "hero.cta1": "ابدأ الاشتراك السنوي", "hero.cta2": "جرّب المنصة الآن",
+      "demo.company": "شركة الأفق للشحن", "demo.tag": "بيانات تجريبية", "tabs.aria": "أقسام المنصة",
+      "tab.files": "نقل الملفات", "tab.pay": "حساب الرواتب", "tab.chat": "المحادثة", "tab.gm": "الإدارة العامة",
+      "d.gm": "الإدارة العامة", "d.sales": "المبيعات", "d.finance": "المالية", "d.hr": "الموارد البشرية", "d.ops": "العمليات",
+      "files.h": "الملفات بين الإدارات", "files.sub": "اختر الإدارة لترى الملفات الواردة إليها. الرقم الملوّن هو عدد الملفات التي لم تُستلم بعد.",
+      "files.filterAria": "تصفية حسب الإدارة المستلمة", "files.all": "كل الإدارات", "files.sendH": "إرسال ملف", "files.file": "الملف", "files.from": "من إدارة", "files.to": "إلى إدارة",
+      "files.send": "إرسال الملف", "files.errNoFile": "اختر ملفًا أولًا.", "files.errSame": "اختر إدارة مستلمة مختلفة عن المرسلة.",
+      "files.pending": "بانتظار الاستلام", "files.received": "تم الاستلام", "files.confirm": "تأكيد الاستلام",
+      "files.empty": "لا ملفات واردة لهذه الإدارة. أرسل ملفًا من النموذج المجاور.", "files.route": "من {a} إلى {b}",
+      "pay.h": "كشف رواتب نوفمبر 2026", "pay.sub": "عدّل أيام العمل والساعات الإضافية والمكافآت، فيتحدّث الصافي والإجمالي فورًا.",
+      "pay.tax": "ضريبة الدخل %", "pay.ins": "التأمينات %", "pay.tGross": "إجمالي الرواتب", "pay.tDed": "إجمالي الخصومات", "pay.tNet": "الصافي المستحق",
+      "pay.cEmp": "الموظف", "pay.cBase": "الراتب الأساسي", "pay.cDays": "أيام العمل", "pay.cOt": "ساعات إضافية", "pay.cBonus": "مكافأة", "pay.cDed": "الخصومات", "pay.cNet": "الصافي",
+      "pay.formula": "الأجر اليومي = الراتب الأساسي ÷ 30. الساعة الإضافية = (الأجر اليومي ÷ 8) × 1.5. الخصومات نسب من الإجمالي. المبالغ بالدولار.",
+      "pay.name": "اسم الموظف", "pay.namePh": "نور الدين بوعزة", "pay.dept": "الإدارة", "pay.country": "بلد الموظف", "pay.add": "إضافة موظف",
+      "pay.err": "أدخل اسم الموظف وراتبه الأساسي.", "pay.del": "حذف",
+      "chat.h": "محادثة الفريق", "chat.sub": "لكل إدارة قناة، ولكل الشركة قناة عامة. رسالتك تظهر باسم «أنت».", "chat.chAria": "القنوات", "chat.general": "عام",
+      "chat.ph": "اكتب رسالة للقناة", "chat.msgAria": "الرسالة", "chat.send": "إرسال", "chat.err": "اكتب رسالة أولًا.", "chat.empty": "لا رسائل بعد. اكتب أول رسالة في قناة {c}.", "chat.me": "أنت",
+      "m1": "صباح الخير. كشف رواتب نوفمبر يُغلق يوم الخميس.", "m2": "وصلتني ملفات الشحن وسأراجعها اليوم.", "m3": "أرسلت عقد المورّد إلى المالية للمراجعة.",
+      "m4": "وصل عقد مورّد الشحن من المبيعات، أراجعه الآن.", "m5": "جدول الدوام وصل من العمليات. سأحدّث أيام العمل في الكشف.",
+      "gm.h": "لوحة الإدارة العامة", "gm.sub": "أرقام الشركة والموافقات والتعاميم في صفحة واحدة. الأرقام تتحدّث من تبويبي الملفات والرواتب.",
+      "gm.kEmps": "الموظفون", "gm.kPay": "صافي الرواتب", "gm.kFiles": "ملفات بانتظار الاستلام", "gm.kAppr": "موافقات معلّقة", "gm.cPend": "ملفات واردة معلّقة",
+      "gm.deptH": "الإدارات في لمحة", "gm.apprH": "طلبات تحتاج موافقتك", "gm.approve": "موافقة", "gm.reject": "رفض", "gm.undo": "تراجع",
+      "gm.sApproved": "تمت الموافقة", "gm.sRejected": "مرفوض", "gm.reqBy": "مقدّم من {d}",
+      "a1": "اعتماد ميزانية الربع الأول", "a2": "شراء حواسيب محمولة لفريق المبيعات", "a3": "تجديد عقد مورّد الشحن", "a4": "فتح وظيفة محلل بيانات",
+      "gm.annH": "تعميم جديد", "gm.annTitle": "العنوان", "gm.annBody": "نص التعميم", "gm.annTo": "الجهة المستلمة", "gm.annAll": "كل الشركة", "gm.annPub": "نشر التعميم",
+      "gm.annErr": "أدخل عنوان التعميم ونصّه.", "gm.annList": "التعاميم المنشورة", "gm.annNote": "يظهر التعميم أيضًا في قناة المحادثة المناسبة.",
+      "n1t": "إغلاق كشف الرواتب", "n1b": "آخر موعد لتعديل أيام العمل هو الخميس الساعة 17:00.",
+      "price.h": "اشتراك واحد لكل الشركة", "price.lead": "ادفع مرة في السنة، واستخدم نقل الملفات وحساب الرواتب والمحادثة ولوحة الإدارة العامة لكل إداراتك وموظفيك. المبلغ يعادل نحو 16.6 دولارًا في الشهر.",
+      "plan.name": "الخطة السنوية", "price.per": "في السنة", "plan.f1": "نقل الملفات بين الإدارات مع تتبّع الاستلام", "plan.f2": "حساب الرواتب والخصومات والساعات الإضافية",
+      "plan.f3": "قناة محادثة لكل إدارة وقناة عامة", "plan.f4": "لوحة الإدارة العامة: موافقات وتعاميم وأرقام", "plan.f5": "تسجيل بلد كل موظف من بين {c} دولة وإقليمًا",
+      "buy": "اشترك الآن", "co.name": "اسم الشركة", "co.mail": "البريد الإلكتروني للعمل", "co.country": "بلد الشركة", "co.confirm": "تأكيد الاشتراك، $199",
+      "co.errName": "أدخل اسم الشركة.", "co.errMail": "أدخل بريدًا إلكترونيًا صحيحًا مثل name@company.com.",
+      "co.done": "سُجّل طلب اشتراك {n} ({c}) في الخطة السنوية. هذه نسخة تجريبية ولم يُخصم أي مبلغ.",
+      "plan.note": "هذه نسخة أولية. الدفع غير مربوط بعد، ولا يُخصم أي مبلغ.", "footer": "جسر نموذج أولي. البيانات في هذه الصفحة تجريبية وتُمسح عند إعادة التحميل.",
+      "intro.title": "مرحبًا بك في جسر",
+      "intro.p": "جسر منصة لفرق العمل عن بعد والشركات الموزّعة بين عدة دول. تنقل الملفات بين الإدارات وتتبّع استلامها، وتحسب رواتب الموظفين وخصوماتها، وتجمع محادثات الفريق، وتعطي الإدارة العامة لوحة واحدة للموافقات والتعاميم والأرقام.",
+      "intro.statLang": "لغة للاختيار", "intro.statCountry": "دولة وإقليمًا", "intro.statPrice": "اشتراك سنوي", "intro.langLabel": "لغة الواجهة", "intro.all": "كل اللغات", "intro.start": "ابدأ التجربة", "intro.close": "إغلاق"
+    },
+    en: {
+      "brand": "Jisr", "nav.aria": "Navigation", "nav.about": "About", "nav.demo": "Try it", "nav.pricing": "Pricing", "nav.subscribe": "Subscribe",
+      "lang.open": "Change language", "lang.title": "Choose a language", "lang.search": "Search languages", "lang.none": "No language matches your search.", "lang.full": "Translated interface",
+      "lang.fallback": "The interface is not translated into this language yet, so it shows in English. Your choice is saved.", "lang.count": "{n} languages",
+      "hero.h1": "Department files and employee payroll in one place",
+      "hero.p": "A platform for remote teams. Send files between departments and see who received them, calculate payroll with deductions, chat with every department, and give general management one board for approvals and announcements.",
+      "hero.cta1": "Start the yearly plan", "hero.cta2": "Try it now",
+      "demo.company": "Horizon Freight Co.", "demo.tag": "Sample data", "tabs.aria": "Platform sections",
+      "tab.files": "File transfer", "tab.pay": "Payroll", "tab.chat": "Chat", "tab.gm": "General management",
+      "d.gm": "General management", "d.sales": "Sales", "d.finance": "Finance", "d.hr": "Human resources", "d.ops": "Operations",
+      "files.h": "Files between departments", "files.sub": "Pick a department to see its incoming files. The colored number counts files not yet received.",
+      "files.filterAria": "Filter by receiving department", "files.all": "All departments", "files.sendH": "Send a file", "files.file": "File", "files.from": "From department", "files.to": "To department",
+      "files.send": "Send file", "files.errNoFile": "Choose a file first.", "files.errSame": "Pick a receiving department different from the sender.",
+      "files.pending": "Awaiting receipt", "files.received": "Received", "files.confirm": "Confirm receipt",
+      "files.empty": "No incoming files for this department. Send one using the form.", "files.route": "From {a} to {b}",
+      "pay.h": "Payroll, November 2026", "pay.sub": "Edit days worked, overtime and bonuses. Net and totals update instantly.",
+      "pay.tax": "Income tax %", "pay.ins": "Social insurance %", "pay.tGross": "Total gross", "pay.tDed": "Total deductions", "pay.tNet": "Net payable",
+      "pay.cEmp": "Employee", "pay.cBase": "Base salary", "pay.cDays": "Days worked", "pay.cOt": "Overtime hours", "pay.cBonus": "Bonus", "pay.cDed": "Deductions", "pay.cNet": "Net",
+      "pay.formula": "Daily wage = base salary ÷ 30. Overtime hour = (daily wage ÷ 8) × 1.5. Deductions are percentages of gross. Amounts in US dollars.",
+      "pay.name": "Employee name", "pay.namePh": "Amine Boudiaf", "pay.dept": "Department", "pay.country": "Employee’s country", "pay.add": "Add employee",
+      "pay.err": "Enter the employee’s name and base salary.", "pay.del": "Delete",
+      "chat.h": "Team chat", "chat.sub": "Each department has a channel, and the whole company has a general one. Your messages appear as “You”.", "chat.chAria": "Channels", "chat.general": "General",
+      "chat.ph": "Write a message to the channel", "chat.msgAria": "Message", "chat.send": "Send", "chat.err": "Write a message first.", "chat.empty": "No messages yet. Write the first one in {c}.", "chat.me": "You",
+      "m1": "Good morning. The November payroll closes on Thursday.", "m2": "I received the shipping files and will review them today.", "m3": "I sent the supplier contract to Finance for review.",
+      "m4": "The shipping supplier contract arrived from Sales. Reviewing it now.", "m5": "The attendance sheet arrived from Operations. I will update days worked in the payroll.",
+      "gm.h": "General management board", "gm.sub": "Company figures, approvals and announcements on one page. Figures update from the files and payroll tabs.",
+      "gm.kEmps": "Employees", "gm.kPay": "Net payroll", "gm.kFiles": "Files awaiting receipt", "gm.kAppr": "Pending approvals", "gm.cPend": "Incoming files pending",
+      "gm.deptH": "Departments at a glance", "gm.apprH": "Requests for your approval", "gm.approve": "Approve", "gm.reject": "Reject", "gm.undo": "Undo",
+      "gm.sApproved": "Approved", "gm.sRejected": "Rejected", "gm.reqBy": "Requested by {d}",
+      "a1": "Approve the Q1 budget", "a2": "Buy laptops for the sales team", "a3": "Renew the shipping supplier contract", "a4": "Open a data analyst position",
+      "gm.annH": "New announcement", "gm.annTitle": "Title", "gm.annBody": "Message", "gm.annTo": "Audience", "gm.annAll": "Whole company", "gm.annPub": "Publish announcement",
+      "gm.annErr": "Enter the announcement title and message.", "gm.annList": "Published announcements", "gm.annNote": "The announcement also appears in the matching chat channel.",
+      "n1t": "Payroll closing", "n1b": "The deadline to edit days worked is Thursday at 5 pm.",
+      "price.h": "One subscription for the whole company", "price.lead": "Pay once a year and use file transfer, payroll, chat and the management board for all your departments and staff. That is about $16.6 a month.",
+      "plan.name": "Yearly plan", "price.per": "per year", "plan.f1": "File transfer between departments with receipt tracking", "plan.f2": "Payroll with deductions and overtime",
+      "plan.f3": "A chat channel per department and a general one", "plan.f4": "General management board: approvals, announcements, figures", "plan.f5": "Record each employee’s country from {c} countries and regions",
+      "buy": "Subscribe now", "co.name": "Company name", "co.mail": "Work email", "co.country": "Company country", "co.confirm": "Confirm subscription, $199",
+      "co.errName": "Enter the company name.", "co.errMail": "Enter a valid email such as name@company.com.",
+      "co.done": "Subscription request for {n} ({c}) on the yearly plan recorded. This is a demo and nothing was charged.",
+      "plan.note": "This is an early version. Payment is not connected yet and nothing is charged.", "footer": "Jisr is an early prototype. Data on this page is sample data and is cleared on reload.",
+      "intro.title": "Welcome to Jisr",
+      "intro.p": "Jisr is a platform for remote teams and companies spread across several countries. It moves files between departments and tracks receipt, calculates employee payroll and deductions, keeps team chat together, and gives general management one board for approvals, announcements and figures.",
+      "intro.statLang": "languages to choose from", "intro.statCountry": "countries and regions", "intro.statPrice": "per year", "intro.langLabel": "Interface language", "intro.all": "All languages", "intro.start": "Start exploring", "intro.close": "Close"
+    },
+    fr: {
+      "brand": "Jisr", "nav.aria": "Navigation", "nav.about": "À propos", "nav.demo": "Essayer", "nav.pricing": "Tarif", "nav.subscribe": "S’abonner",
+      "lang.open": "Changer de langue", "lang.title": "Choisir la langue", "lang.search": "Rechercher une langue", "lang.none": "Aucune langue ne correspond.", "lang.full": "Interface traduite",
+      "lang.fallback": "L’interface n’est pas encore traduite dans cette langue, elle s’affiche donc en anglais. Votre choix est enregistré.", "lang.count": "{n} langues",
+      "hero.h1": "Les fichiers des services et la paie des employés au même endroit",
+      "hero.p": "Une plateforme pour les équipes à distance. Envoyez des fichiers entre services et suivez leur réception, calculez la paie avec les retenues, discutez avec chaque service et donnez à la direction générale un tableau unique pour les validations et les annonces.",
+      "hero.cta1": "Commencer l’abonnement annuel", "hero.cta2": "Essayer maintenant",
+      "demo.company": "Horizon Fret SA", "demo.tag": "Données d’exemple", "tabs.aria": "Sections de la plateforme",
+      "tab.files": "Transfert de fichiers", "tab.pay": "Paie", "tab.chat": "Messagerie", "tab.gm": "Direction générale",
+      "d.gm": "Direction générale", "d.sales": "Ventes", "d.finance": "Finance", "d.hr": "Ressources humaines", "d.ops": "Opérations",
+      "files.h": "Fichiers entre services", "files.sub": "Choisissez un service pour voir ses fichiers entrants. Le nombre coloré indique les fichiers non encore reçus.",
+      "files.filterAria": "Filtrer par service destinataire", "files.all": "Tous les services", "files.sendH": "Envoyer un fichier", "files.file": "Fichier", "files.from": "Du service", "files.to": "Vers le service",
+      "files.send": "Envoyer le fichier", "files.errNoFile": "Choisissez d’abord un fichier.", "files.errSame": "Choisissez un service destinataire différent de l’expéditeur.",
+      "files.pending": "En attente de réception", "files.received": "Reçu", "files.confirm": "Confirmer la réception",
+      "files.empty": "Aucun fichier entrant pour ce service. Envoyez-en un avec le formulaire.", "files.route": "De {a} vers {b}",
+      "pay.h": "Paie de novembre 2026", "pay.sub": "Modifiez les jours travaillés, les heures supplémentaires et les primes. Le net et les totaux se mettent à jour aussitôt.",
+      "pay.tax": "Impôt sur le revenu %", "pay.ins": "Cotisations sociales %", "pay.tGross": "Total brut", "pay.tDed": "Total des retenues", "pay.tNet": "Net à payer",
+      "pay.cEmp": "Employé", "pay.cBase": "Salaire de base", "pay.cDays": "Jours travaillés", "pay.cOt": "Heures sup.", "pay.cBonus": "Prime", "pay.cDed": "Retenues", "pay.cNet": "Net",
+      "pay.formula": "Salaire journalier = salaire de base ÷ 30. Heure sup. = (salaire journalier ÷ 8) × 1,5. Les retenues sont des pourcentages du brut. Montants en dollars US.",
+      "pay.name": "Nom de l’employé", "pay.namePh": "Amine Boudiaf", "pay.dept": "Service", "pay.country": "Pays de l’employé", "pay.add": "Ajouter l’employé",
+      "pay.err": "Saisissez le nom et le salaire de base.", "pay.del": "Supprimer",
+      "chat.h": "Messagerie d’équipe", "chat.sub": "Chaque service a son canal, et toute l’entreprise a un canal général. Vos messages apparaissent sous « Vous ».", "chat.chAria": "Canaux", "chat.general": "Général",
+      "chat.ph": "Écrivez un message au canal", "chat.msgAria": "Message", "chat.send": "Envoyer", "chat.err": "Écrivez d’abord un message.", "chat.empty": "Pas encore de messages. Écrivez le premier dans {c}.", "chat.me": "Vous",
+      "m1": "Bonjour. La paie de novembre est clôturée jeudi.", "m2": "J’ai reçu les fichiers d’expédition et je les vérifie aujourd’hui.", "m3": "J’ai envoyé le contrat fournisseur à la Finance pour examen.",
+      "m4": "Le contrat du fournisseur d’expédition est arrivé des Ventes. Je le vérifie.", "m5": "La feuille de présence est arrivée des Opérations. Je mets à jour les jours travaillés.",
+      "gm.h": "Tableau de la direction générale", "gm.sub": "Chiffres de l’entreprise, validations et annonces sur une page. Les chiffres se mettent à jour depuis les onglets fichiers et paie.",
+      "gm.kEmps": "Employés", "gm.kPay": "Paie nette", "gm.kFiles": "Fichiers en attente", "gm.kAppr": "Validations en attente", "gm.cPend": "Fichiers entrants en attente",
+      "gm.deptH": "Les services en un coup d’œil", "gm.apprH": "Demandes à valider", "gm.approve": "Approuver", "gm.reject": "Refuser", "gm.undo": "Annuler",
+      "gm.sApproved": "Approuvé", "gm.sRejected": "Refusé", "gm.reqBy": "Demandé par {d}",
+      "a1": "Valider le budget du T1", "a2": "Acheter des ordinateurs portables pour l’équipe ventes", "a3": "Renouveler le contrat du fournisseur d’expédition", "a4": "Ouvrir un poste d’analyste de données",
+      "gm.annH": "Nouvelle annonce", "gm.annTitle": "Titre", "gm.annBody": "Message", "gm.annTo": "Destinataires", "gm.annAll": "Toute l’entreprise", "gm.annPub": "Publier l’annonce",
+      "gm.annErr": "Saisissez le titre et le message de l’annonce.", "gm.annList": "Annonces publiées", "gm.annNote": "L’annonce apparaît aussi dans le canal de discussion correspondant.",
+      "n1t": "Clôture de la paie", "n1b": "La date limite pour modifier les jours travaillés est jeudi à 17 h.",
+      "price.h": "Un abonnement pour toute l’entreprise", "price.lead": "Payez une fois par an et utilisez le transfert de fichiers, la paie, la messagerie et le tableau de direction pour tous vos services. Soit environ 16,6 $ par mois.",
+      "plan.name": "Formule annuelle", "price.per": "par an", "plan.f1": "Transfert de fichiers entre services avec suivi de réception", "plan.f2": "Paie avec retenues et heures supplémentaires",
+      "plan.f3": "Un canal par service et un canal général", "plan.f4": "Tableau de direction : validations, annonces, chiffres", "plan.f5": "Pays de chaque employé parmi {c} pays et régions",
+      "buy": "S’abonner maintenant", "co.name": "Nom de l’entreprise", "co.mail": "E-mail professionnel", "co.country": "Pays de l’entreprise", "co.confirm": "Confirmer l’abonnement, 199 $",
+      "co.errName": "Saisissez le nom de l’entreprise.", "co.errMail": "Saisissez un e-mail valide, par exemple name@company.com.",
+      "co.done": "La demande d’abonnement de {n} ({c}) à la formule annuelle est enregistrée. Ceci est une démo, rien n’a été débité.",
+      "plan.note": "Version préliminaire. Le paiement n’est pas encore connecté et rien n’est débité.", "footer": "Jisr est un prototype. Les données de cette page sont des exemples et sont effacées au rechargement.",
+      "intro.title": "Bienvenue sur Jisr",
+      "intro.p": "Jisr est une plateforme pour les équipes à distance et les entreprises réparties dans plusieurs pays. Elle transfère les fichiers entre services et suit leur réception, calcule la paie et les retenues, réunit la messagerie d’équipe et offre à la direction générale un tableau unique pour les validations, annonces et chiffres.",
+      "intro.statLang": "langues au choix", "intro.statCountry": "pays et régions", "intro.statPrice": "par an", "intro.langLabel": "Langue de l’interface", "intro.all": "Toutes les langues", "intro.start": "Commencer", "intro.close": "Fermer"
+    },
+    es: {
+      "brand": "Jisr", "nav.aria": "Navegación", "nav.about": "Acerca de", "nav.demo": "Probar", "nav.pricing": "Precio", "nav.subscribe": "Suscribirse",
+      "lang.open": "Cambiar idioma", "lang.title": "Elige un idioma", "lang.search": "Buscar idiomas", "lang.none": "Ningún idioma coincide con tu búsqueda.", "lang.full": "Interfaz traducida",
+      "lang.fallback": "La interfaz aún no está traducida a este idioma, así que se muestra en inglés. Tu elección se ha guardado.", "lang.count": "{n} idiomas",
+      "hero.h1": "Los archivos de los departamentos y la nómina en un solo lugar",
+      "hero.p": "Una plataforma para equipos remotos. Envía archivos entre departamentos y comprueba quién los recibió, calcula la nómina con sus deducciones, chatea con cada departamento y da a la dirección general un único panel de aprobaciones y comunicados.",
+      "hero.cta1": "Empezar el plan anual", "hero.cta2": "Probar ahora",
+      "demo.company": "Horizon Carga S.A.", "demo.tag": "Datos de ejemplo", "tabs.aria": "Secciones de la plataforma",
+      "tab.files": "Envío de archivos", "tab.pay": "Nómina", "tab.chat": "Chat", "tab.gm": "Dirección general",
+      "d.gm": "Dirección general", "d.sales": "Ventas", "d.finance": "Finanzas", "d.hr": "Recursos humanos", "d.ops": "Operaciones",
+      "files.h": "Archivos entre departamentos", "files.sub": "Elige un departamento para ver sus archivos entrantes. El número de color cuenta los archivos aún no recibidos.",
+      "files.filterAria": "Filtrar por departamento receptor", "files.all": "Todos los departamentos", "files.sendH": "Enviar un archivo", "files.file": "Archivo", "files.from": "Del departamento", "files.to": "Al departamento",
+      "files.send": "Enviar archivo", "files.errNoFile": "Elige primero un archivo.", "files.errSame": "Elige un departamento receptor distinto del remitente.",
+      "files.pending": "Pendiente de recepción", "files.received": "Recibido", "files.confirm": "Confirmar recepción",
+      "files.empty": "No hay archivos entrantes para este departamento. Envía uno con el formulario.", "files.route": "De {a} a {b}",
+      "pay.h": "Nómina de noviembre de 2026", "pay.sub": "Edita los días trabajados, las horas extra y las primas. El neto y los totales se actualizan al instante.",
+      "pay.tax": "Impuesto sobre la renta %", "pay.ins": "Seguridad social %", "pay.tGross": "Total bruto", "pay.tDed": "Total de deducciones", "pay.tNet": "Neto a pagar",
+      "pay.cEmp": "Empleado", "pay.cBase": "Salario base", "pay.cDays": "Días trabajados", "pay.cOt": "Horas extra", "pay.cBonus": "Prima", "pay.cDed": "Deducciones", "pay.cNet": "Neto",
+      "pay.formula": "Salario diario = salario base ÷ 30. Hora extra = (salario diario ÷ 8) × 1,5. Las deducciones son porcentajes del bruto. Importes en dólares estadounidenses.",
+      "pay.name": "Nombre del empleado", "pay.namePh": "Amine Boudiaf", "pay.dept": "Departamento", "pay.country": "País del empleado", "pay.add": "Añadir empleado",
+      "pay.err": "Escribe el nombre del empleado y su salario base.", "pay.del": "Eliminar",
+      "chat.h": "Chat del equipo", "chat.sub": "Cada departamento tiene un canal y toda la empresa tiene uno general. Tus mensajes aparecen como «Tú».", "chat.chAria": "Canales", "chat.general": "General",
+      "chat.ph": "Escribe un mensaje al canal", "chat.msgAria": "Mensaje", "chat.send": "Enviar", "chat.err": "Escribe primero un mensaje.", "chat.empty": "Aún no hay mensajes. Escribe el primero en {c}.", "chat.me": "Tú",
+      "m1": "Buenos días. La nómina de noviembre se cierra el jueves.", "m2": "Recibí los archivos de envío y los reviso hoy.", "m3": "Envié el contrato del proveedor a Finanzas para su revisión.",
+      "m4": "El contrato del proveedor de transporte llegó desde Ventas. Lo estoy revisando.", "m5": "La hoja de asistencia llegó desde Operaciones. Actualizaré los días trabajados en la nómina.",
+      "gm.h": "Panel de la dirección general", "gm.sub": "Cifras de la empresa, aprobaciones y comunicados en una sola página. Las cifras se actualizan desde las pestañas de archivos y nómina.",
+      "gm.kEmps": "Empleados", "gm.kPay": "Nómina neta", "gm.kFiles": "Archivos pendientes de recepción", "gm.kAppr": "Aprobaciones pendientes", "gm.cPend": "Archivos entrantes pendientes",
+      "gm.deptH": "Los departamentos de un vistazo", "gm.apprH": "Solicitudes para tu aprobación", "gm.approve": "Aprobar", "gm.reject": "Rechazar", "gm.undo": "Deshacer",
+      "gm.sApproved": "Aprobado", "gm.sRejected": "Rechazado", "gm.reqBy": "Solicitado por {d}",
+      "a1": "Aprobar el presupuesto del primer trimestre", "a2": "Comprar portátiles para el equipo de ventas", "a3": "Renovar el contrato del proveedor de transporte", "a4": "Abrir un puesto de analista de datos",
+      "gm.annH": "Nuevo comunicado", "gm.annTitle": "Título", "gm.annBody": "Mensaje", "gm.annTo": "Destinatarios", "gm.annAll": "Toda la empresa", "gm.annPub": "Publicar comunicado",
+      "gm.annErr": "Escribe el título y el mensaje del comunicado.", "gm.annList": "Comunicados publicados", "gm.annNote": "El comunicado también aparece en el canal de chat correspondiente.",
+      "n1t": "Cierre de la nómina", "n1b": "El plazo para editar los días trabajados es el jueves a las 17:00.",
+      "price.h": "Una suscripción para toda la empresa", "price.lead": "Paga una vez al año y usa el envío de archivos, la nómina, el chat y el panel de dirección en todos tus departamentos. Son unos 16,6 $ al mes.",
+      "plan.name": "Plan anual", "price.per": "al año", "plan.f1": "Envío de archivos entre departamentos con seguimiento de recepción", "plan.f2": "Nómina con deducciones y horas extra",
+      "plan.f3": "Un canal de chat por departamento y uno general", "plan.f4": "Panel de dirección general: aprobaciones, comunicados y cifras", "plan.f5": "Registra el país de cada empleado entre {c} países y regiones",
+      "buy": "Suscribirse ahora", "co.name": "Nombre de la empresa", "co.mail": "Correo de trabajo", "co.country": "País de la empresa", "co.confirm": "Confirmar suscripción, 199 $",
+      "co.errName": "Escribe el nombre de la empresa.", "co.errMail": "Escribe un correo válido, por ejemplo name@company.com.",
+      "co.done": "Se registró la solicitud de suscripción de {n} ({c}) al plan anual. Es una demostración y no se cobró nada.",
+      "plan.note": "Es una versión inicial. El pago aún no está conectado y no se cobra nada.", "footer": "Jisr es un prototipo. Los datos de esta página son de ejemplo y se borran al recargar.",
+      "intro.title": "Bienvenido a Jisr",
+      "intro.p": "Jisr es una plataforma para equipos remotos y empresas repartidas en varios países. Mueve archivos entre departamentos y sigue su recepción, calcula la nómina de los empleados y sus deducciones, reúne el chat del equipo y da a la dirección general un único panel de aprobaciones, comunicados y cifras.",
+      "intro.statLang": "idiomas a elegir", "intro.statCountry": "países y regiones", "intro.statPrice": "al año", "intro.langLabel": "Idioma de la interfaz", "intro.all": "Todos los idiomas", "intro.start": "Empezar", "intro.close": "Cerrar"
+    },
+    de: {
+      "brand": "Jisr", "nav.aria": "Navigation", "nav.about": "Über uns", "nav.demo": "Ausprobieren", "nav.pricing": "Preis", "nav.subscribe": "Abonnieren",
+      "lang.open": "Sprache ändern", "lang.title": "Sprache wählen", "lang.search": "Sprachen suchen", "lang.none": "Keine Sprache entspricht Ihrer Suche.", "lang.full": "Übersetzte Oberfläche",
+      "lang.fallback": "Die Oberfläche ist in dieser Sprache noch nicht übersetzt und erscheint daher auf Englisch. Ihre Auswahl wurde gespeichert.", "lang.count": "{n} Sprachen",
+      "hero.h1": "Abteilungsdateien und Mitarbeiterabrechnung an einem Ort",
+      "hero.p": "Eine Plattform für Remote-Teams. Senden Sie Dateien zwischen Abteilungen und sehen Sie, wer sie erhalten hat, berechnen Sie die Gehälter mit Abzügen, chatten Sie mit jeder Abteilung und geben Sie der Geschäftsleitung eine zentrale Übersicht für Genehmigungen und Mitteilungen.",
+      "hero.cta1": "Jahrestarif starten", "hero.cta2": "Jetzt ausprobieren",
+      "demo.company": "Horizon Fracht GmbH", "demo.tag": "Beispieldaten", "tabs.aria": "Bereiche der Plattform",
+      "tab.files": "Dateiübertragung", "tab.pay": "Gehaltsabrechnung", "tab.chat": "Chat", "tab.gm": "Geschäftsleitung",
+      "d.gm": "Geschäftsleitung", "d.sales": "Vertrieb", "d.finance": "Finanzen", "d.hr": "Personal", "d.ops": "Betrieb",
+      "files.h": "Dateien zwischen Abteilungen", "files.sub": "Wählen Sie eine Abteilung, um ihre eingehenden Dateien zu sehen. Die farbige Zahl zählt noch nicht erhaltene Dateien.",
+      "files.filterAria": "Nach empfangender Abteilung filtern", "files.all": "Alle Abteilungen", "files.sendH": "Datei senden", "files.file": "Datei", "files.from": "Von Abteilung", "files.to": "An Abteilung",
+      "files.send": "Datei senden", "files.errNoFile": "Wählen Sie zuerst eine Datei.", "files.errSame": "Wählen Sie eine andere empfangende Abteilung als die sendende.",
+      "files.pending": "Warten auf Empfang", "files.received": "Empfangen", "files.confirm": "Empfang bestätigen",
+      "files.empty": "Keine eingehenden Dateien für diese Abteilung. Senden Sie eine mit dem Formular.", "files.route": "Von {a} an {b}",
+      "pay.h": "Gehaltsabrechnung November 2026", "pay.sub": "Bearbeiten Sie Arbeitstage, Überstunden und Prämien. Netto und Summen aktualisieren sich sofort.",
+      "pay.tax": "Einkommensteuer %", "pay.ins": "Sozialversicherung %", "pay.tGross": "Brutto gesamt", "pay.tDed": "Abzüge gesamt", "pay.tNet": "Netto auszuzahlen",
+      "pay.cEmp": "Mitarbeiter", "pay.cBase": "Grundgehalt", "pay.cDays": "Arbeitstage", "pay.cOt": "Überstunden", "pay.cBonus": "Prämie", "pay.cDed": "Abzüge", "pay.cNet": "Netto",
+      "pay.formula": "Tageslohn = Grundgehalt ÷ 30. Überstunde = (Tageslohn ÷ 8) × 1,5. Abzüge sind Prozente vom Brutto. Beträge in US-Dollar.",
+      "pay.name": "Name des Mitarbeiters", "pay.namePh": "Amine Boudiaf", "pay.dept": "Abteilung", "pay.country": "Land des Mitarbeiters", "pay.add": "Mitarbeiter hinzufügen",
+      "pay.err": "Geben Sie Name und Grundgehalt des Mitarbeiters ein.", "pay.del": "Löschen",
+      "chat.h": "Team-Chat", "chat.sub": "Jede Abteilung hat einen Kanal, das ganze Unternehmen einen allgemeinen. Ihre Nachrichten erscheinen als „Sie“.", "chat.chAria": "Kanäle", "chat.general": "Allgemein",
+      "chat.ph": "Nachricht an den Kanal schreiben", "chat.msgAria": "Nachricht", "chat.send": "Senden", "chat.err": "Schreiben Sie zuerst eine Nachricht.", "chat.empty": "Noch keine Nachrichten. Schreiben Sie die erste in {c}.", "chat.me": "Sie",
+      "m1": "Guten Morgen. Die Novemberabrechnung wird am Donnerstag abgeschlossen.", "m2": "Ich habe die Versanddateien erhalten und prüfe sie heute.", "m3": "Ich habe den Lieferantenvertrag zur Prüfung an die Finanzen geschickt.",
+      "m4": "Der Vertrag mit dem Frachtlieferanten ist vom Vertrieb eingetroffen. Ich prüfe ihn gerade.", "m5": "Die Anwesenheitsliste kam vom Betrieb. Ich aktualisiere die Arbeitstage in der Abrechnung.",
+      "gm.h": "Übersicht der Geschäftsleitung", "gm.sub": "Unternehmenszahlen, Genehmigungen und Mitteilungen auf einer Seite. Die Zahlen werden aus den Reitern Dateien und Gehälter aktualisiert.",
+      "gm.kEmps": "Mitarbeiter", "gm.kPay": "Netto-Gehälter", "gm.kFiles": "Dateien ohne Empfang", "gm.kAppr": "Offene Genehmigungen", "gm.cPend": "Eingehende Dateien offen",
+      "gm.deptH": "Abteilungen im Überblick", "gm.apprH": "Anfragen zur Genehmigung", "gm.approve": "Genehmigen", "gm.reject": "Ablehnen", "gm.undo": "Rückgängig",
+      "gm.sApproved": "Genehmigt", "gm.sRejected": "Abgelehnt", "gm.reqBy": "Angefragt von {d}",
+      "a1": "Budget für das erste Quartal genehmigen", "a2": "Laptops für das Vertriebsteam kaufen", "a3": "Vertrag mit dem Frachtlieferanten verlängern", "a4": "Stelle als Datenanalyst ausschreiben",
+      "gm.annH": "Neue Mitteilung", "gm.annTitle": "Titel", "gm.annBody": "Nachricht", "gm.annTo": "Empfänger", "gm.annAll": "Ganzes Unternehmen", "gm.annPub": "Mitteilung veröffentlichen",
+      "gm.annErr": "Geben Sie Titel und Text der Mitteilung ein.", "gm.annList": "Veröffentlichte Mitteilungen", "gm.annNote": "Die Mitteilung erscheint auch im passenden Chat-Kanal.",
+      "n1t": "Abschluss der Gehaltsabrechnung", "n1b": "Frist zum Bearbeiten der Arbeitstage ist Donnerstag, 17 Uhr.",
+      "price.h": "Ein Abonnement für das ganze Unternehmen", "price.lead": "Zahlen Sie einmal im Jahr und nutzen Sie Dateiübertragung, Gehaltsabrechnung, Chat und die Übersicht der Geschäftsleitung für alle Abteilungen. Das sind etwa 16,6 $ pro Monat.",
+      "plan.name": "Jahrestarif", "price.per": "pro Jahr", "plan.f1": "Dateiübertragung zwischen Abteilungen mit Empfangsverfolgung", "plan.f2": "Gehaltsabrechnung mit Abzügen und Überstunden",
+      "plan.f3": "Ein Chat-Kanal pro Abteilung und ein allgemeiner", "plan.f4": "Übersicht der Geschäftsleitung: Genehmigungen, Mitteilungen, Zahlen", "plan.f5": "Land jedes Mitarbeiters aus {c} Ländern und Regionen erfassen",
+      "buy": "Jetzt abonnieren", "co.name": "Firmenname", "co.mail": "Geschäftliche E-Mail", "co.country": "Land des Unternehmens", "co.confirm": "Abonnement bestätigen, 199 $",
+      "co.errName": "Geben Sie den Firmennamen ein.", "co.errMail": "Geben Sie eine gültige E-Mail ein, zum Beispiel name@company.com.",
+      "co.done": "Abo-Anfrage von {n} ({c}) für den Jahrestarif erfasst. Dies ist eine Demo, es wurde nichts abgebucht.",
+      "plan.note": "Dies ist eine frühe Version. Die Zahlung ist noch nicht angebunden, es wird nichts abgebucht.", "footer": "Jisr ist ein Prototyp. Die Daten auf dieser Seite sind Beispieldaten und werden beim Neuladen gelöscht.",
+      "intro.title": "Willkommen bei Jisr",
+      "intro.p": "Jisr ist eine Plattform für Remote-Teams und Unternehmen in mehreren Ländern. Sie überträgt Dateien zwischen Abteilungen und verfolgt den Empfang, berechnet Gehälter und Abzüge, bündelt den Team-Chat und gibt der Geschäftsleitung eine zentrale Übersicht für Genehmigungen, Mitteilungen und Zahlen.",
+      "intro.statLang": "Sprachen zur Auswahl", "intro.statCountry": "Länder und Regionen", "intro.statPrice": "pro Jahr", "intro.langLabel": "Sprache der Oberfläche", "intro.all": "Alle Sprachen", "intro.start": "Loslegen", "intro.close": "Schließen"
+    },
+    tr: {
+      "brand": "Jisr", "nav.aria": "Gezinme", "nav.about": "Hakkında", "nav.demo": "Dene", "nav.pricing": "Fiyat", "nav.subscribe": "Abone ol",
+      "lang.open": "Dili değiştir", "lang.title": "Dil seçin", "lang.search": "Dil ara", "lang.none": "Aramanıza uyan dil yok.", "lang.full": "Çevrilmiş arayüz",
+      "lang.fallback": "Arayüz henüz bu dile çevrilmedi, bu yüzden İngilizce gösteriliyor. Seçiminiz kaydedildi.", "lang.count": "{n} dil",
+      "hero.h1": "Departman dosyaları ve çalışan bordroları tek yerde",
+      "hero.p": "Uzaktan çalışan ekipler için bir platform. Departmanlar arasında dosya gönderin ve kimin aldığını görün, kesintileriyle bordro hesaplayın, her departmanla sohbet edin ve genel müdürlüğe onaylar ve duyurular için tek bir pano verin.",
+      "hero.cta1": "Yıllık planı başlat", "hero.cta2": "Şimdi dene",
+      "demo.company": "Horizon Nakliyat A.Ş.", "demo.tag": "Örnek veri", "tabs.aria": "Platform bölümleri",
+      "tab.files": "Dosya aktarımı", "tab.pay": "Bordro", "tab.chat": "Sohbet", "tab.gm": "Genel müdürlük",
+      "d.gm": "Genel müdürlük", "d.sales": "Satış", "d.finance": "Finans", "d.hr": "İnsan kaynakları", "d.ops": "Operasyon",
+      "files.h": "Departmanlar arası dosyalar", "files.sub": "Gelen dosyalarını görmek için bir departman seçin. Renkli sayı henüz teslim alınmamış dosyaları gösterir.",
+      "files.filterAria": "Alan departmana göre filtrele", "files.all": "Tüm departmanlar", "files.sendH": "Dosya gönder", "files.file": "Dosya", "files.from": "Gönderen departman", "files.to": "Alan departman",
+      "files.send": "Dosyayı gönder", "files.errNoFile": "Önce bir dosya seçin.", "files.errSame": "Gönderenden farklı bir alıcı departman seçin.",
+      "files.pending": "Teslim bekliyor", "files.received": "Teslim alındı", "files.confirm": "Teslimi onayla",
+      "files.empty": "Bu departman için gelen dosya yok. Formu kullanarak bir dosya gönderin.", "files.route": "{a} departmanından {b} departmanına",
+      "pay.h": "Kasım 2026 bordrosu", "pay.sub": "Çalışılan gün, fazla mesai ve primleri düzenleyin. Net ve toplamlar anında güncellenir.",
+      "pay.tax": "Gelir vergisi %", "pay.ins": "Sosyal sigorta %", "pay.tGross": "Toplam brüt", "pay.tDed": "Toplam kesinti", "pay.tNet": "Ödenecek net",
+      "pay.cEmp": "Çalışan", "pay.cBase": "Temel maaş", "pay.cDays": "Çalışılan gün", "pay.cOt": "Fazla mesai saati", "pay.cBonus": "Prim", "pay.cDed": "Kesintiler", "pay.cNet": "Net",
+      "pay.formula": "Günlük ücret = temel maaş ÷ 30. Fazla mesai saati = (günlük ücret ÷ 8) × 1,5. Kesintiler brütün yüzdesidir. Tutarlar ABD doları cinsindendir.",
+      "pay.name": "Çalışan adı", "pay.namePh": "Amine Boudiaf", "pay.dept": "Departman", "pay.country": "Çalışanın ülkesi", "pay.add": "Çalışan ekle",
+      "pay.err": "Çalışanın adını ve temel maaşını girin.", "pay.del": "Sil",
+      "chat.h": "Ekip sohbeti", "chat.sub": "Her departmanın bir kanalı, tüm şirketin genel bir kanalı var. Mesajlarınız “Siz” olarak görünür.", "chat.chAria": "Kanallar", "chat.general": "Genel",
+      "chat.ph": "Kanala mesaj yazın", "chat.msgAria": "Mesaj", "chat.send": "Gönder", "chat.err": "Önce bir mesaj yazın.", "chat.empty": "Henüz mesaj yok. {c} kanalına ilk mesajı yazın.", "chat.me": "Siz",
+      "m1": "Günaydın. Kasım bordrosu perşembe günü kapanıyor.", "m2": "Sevkiyat dosyalarını aldım, bugün inceleyeceğim.", "m3": "Tedarikçi sözleşmesini incelenmek üzere Finans'a gönderdim.",
+      "m4": "Nakliye tedarikçisi sözleşmesi Satış'tan geldi. Şimdi inceliyorum.", "m5": "Devam çizelgesi Operasyon'dan geldi. Bordrodaki çalışılan günleri güncelleyeceğim.",
+      "gm.h": "Genel müdürlük panosu", "gm.sub": "Şirket rakamları, onaylar ve duyurular tek sayfada. Rakamlar dosya ve bordro sekmelerinden güncellenir.",
+      "gm.kEmps": "Çalışanlar", "gm.kPay": "Net bordro", "gm.kFiles": "Teslim bekleyen dosyalar", "gm.kAppr": "Bekleyen onaylar", "gm.cPend": "Bekleyen gelen dosyalar",
+      "gm.deptH": "Departmanlara genel bakış", "gm.apprH": "Onayınızı bekleyen talepler", "gm.approve": "Onayla", "gm.reject": "Reddet", "gm.undo": "Geri al",
+      "gm.sApproved": "Onaylandı", "gm.sRejected": "Reddedildi", "gm.reqBy": "Talep eden: {d}",
+      "a1": "1. çeyrek bütçesini onayla", "a2": "Satış ekibi için dizüstü bilgisayar al", "a3": "Nakliye tedarikçisi sözleşmesini yenile", "a4": "Veri analisti pozisyonu aç",
+      "gm.annH": "Yeni duyuru", "gm.annTitle": "Başlık", "gm.annBody": "Mesaj", "gm.annTo": "Alıcılar", "gm.annAll": "Tüm şirket", "gm.annPub": "Duyuruyu yayınla",
+      "gm.annErr": "Duyurunun başlığını ve metnini girin.", "gm.annList": "Yayınlanan duyurular", "gm.annNote": "Duyuru ilgili sohbet kanalında da görünür.",
+      "n1t": "Bordro kapanışı", "n1b": "Çalışılan günleri düzenlemek için son tarih perşembe saat 17:00.",
+      "price.h": "Tüm şirket için tek abonelik", "price.lead": "Yılda bir kez ödeyin; dosya aktarımı, bordro, sohbet ve genel müdürlük panosunu tüm departmanlarınız için kullanın. Bu, ayda yaklaşık 16,6 $ eder.",
+      "plan.name": "Yıllık plan", "price.per": "yıllık", "plan.f1": "Teslim takibiyle departmanlar arası dosya aktarımı", "plan.f2": "Kesintiler ve fazla mesaiyle bordro",
+      "plan.f3": "Her departman için bir sohbet kanalı ve bir genel kanal", "plan.f4": "Genel müdürlük panosu: onaylar, duyurular, rakamlar", "plan.f5": "Her çalışanın ülkesini {c} ülke ve bölge arasından kaydedin",
+      "buy": "Şimdi abone ol", "co.name": "Şirket adı", "co.mail": "İş e-postası", "co.country": "Şirketin ülkesi", "co.confirm": "Aboneliği onayla, 199 $",
+      "co.errName": "Şirket adını girin.", "co.errMail": "name@company.com gibi geçerli bir e-posta girin.",
+      "co.done": "{n} ({c}) için yıllık plan abonelik talebi kaydedildi. Bu bir demodur, ücret alınmadı.",
+      "plan.note": "Bu bir ilk sürümdür. Ödeme henüz bağlı değil ve ücret alınmaz.", "footer": "Jisr bir prototiptir. Bu sayfadaki veriler örnektir ve yeniden yüklemede silinir.",
+      "intro.title": "Jisr'e hoş geldiniz",
+      "intro.p": "Jisr, uzaktan çalışan ekipler ve birçok ülkeye yayılmış şirketler için bir platformdur. Departmanlar arasında dosya taşır ve teslimini izler, çalışan bordrolarını ve kesintilerini hesaplar, ekip sohbetini bir arada tutar ve genel müdürlüğe onaylar, duyurular ve rakamlar için tek bir pano sunar.",
+      "intro.statLang": "dil seçeneği", "intro.statCountry": "ülke ve bölge", "intro.statPrice": "yıllık", "intro.langLabel": "Arayüz dili", "intro.all": "Tüm diller", "intro.start": "Başla", "intro.close": "Kapat"
+    },
+    pt: {
+      "brand": "Jisr", "nav.aria": "Navegação", "nav.about": "Sobre", "nav.demo": "Experimentar", "nav.pricing": "Preço", "nav.subscribe": "Assinar",
+      "lang.open": "Mudar idioma", "lang.title": "Escolha um idioma", "lang.search": "Pesquisar idiomas", "lang.none": "Nenhum idioma corresponde à pesquisa.", "lang.full": "Interface traduzida",
+      "lang.fallback": "A interface ainda não está traduzida para este idioma, por isso aparece em inglês. A sua escolha foi guardada.", "lang.count": "{n} idiomas",
+      "hero.h1": "Arquivos dos departamentos e folha de pagamento num só lugar",
+      "hero.p": "Uma plataforma para equipas remotas. Envie arquivos entre departamentos e veja quem os recebeu, calcule a folha de pagamento com descontos, converse com cada departamento e dê à direção-geral um único painel de aprovações e comunicados.",
+      "hero.cta1": "Começar o plano anual", "hero.cta2": "Experimentar agora",
+      "demo.company": "Horizon Cargas S.A.", "demo.tag": "Dados de exemplo", "tabs.aria": "Secções da plataforma",
+      "tab.files": "Envio de arquivos", "tab.pay": "Folha de pagamento", "tab.chat": "Chat", "tab.gm": "Direção-geral",
+      "d.gm": "Direção-geral", "d.sales": "Vendas", "d.finance": "Finanças", "d.hr": "Recursos humanos", "d.ops": "Operações",
+      "files.h": "Arquivos entre departamentos", "files.sub": "Escolha um departamento para ver os arquivos que recebe. O número colorido conta os arquivos ainda não recebidos.",
+      "files.filterAria": "Filtrar por departamento recetor", "files.all": "Todos os departamentos", "files.sendH": "Enviar um arquivo", "files.file": "Arquivo", "files.from": "Do departamento", "files.to": "Para o departamento",
+      "files.send": "Enviar arquivo", "files.errNoFile": "Escolha primeiro um arquivo.", "files.errSame": "Escolha um departamento recetor diferente do remetente.",
+      "files.pending": "Aguarda receção", "files.received": "Recebido", "files.confirm": "Confirmar receção",
+      "files.empty": "Não há arquivos recebidos para este departamento. Envie um com o formulário.", "files.route": "De {a} para {b}",
+      "pay.h": "Folha de pagamento de novembro de 2026", "pay.sub": "Edite os dias trabalhados, as horas extra e os prémios. O líquido e os totais atualizam-se de imediato.",
+      "pay.tax": "Imposto de renda %", "pay.ins": "Segurança social %", "pay.tGross": "Total bruto", "pay.tDed": "Total de descontos", "pay.tNet": "Líquido a pagar",
+      "pay.cEmp": "Funcionário", "pay.cBase": "Salário base", "pay.cDays": "Dias trabalhados", "pay.cOt": "Horas extra", "pay.cBonus": "Prémio", "pay.cDed": "Descontos", "pay.cNet": "Líquido",
+      "pay.formula": "Salário diário = salário base ÷ 30. Hora extra = (salário diário ÷ 8) × 1,5. Os descontos são percentagens do bruto. Valores em dólares americanos.",
+      "pay.name": "Nome do funcionário", "pay.namePh": "Amine Boudiaf", "pay.dept": "Departamento", "pay.country": "País do funcionário", "pay.add": "Adicionar funcionário",
+      "pay.err": "Indique o nome e o salário base do funcionário.", "pay.del": "Eliminar",
+      "chat.h": "Chat da equipa", "chat.sub": "Cada departamento tem um canal e toda a empresa tem um geral. As suas mensagens aparecem como «Você».", "chat.chAria": "Canais", "chat.general": "Geral",
+      "chat.ph": "Escreva uma mensagem ao canal", "chat.msgAria": "Mensagem", "chat.send": "Enviar", "chat.err": "Escreva primeiro uma mensagem.", "chat.empty": "Ainda não há mensagens. Escreva a primeira em {c}.", "chat.me": "Você",
+      "m1": "Bom dia. A folha de novembro fecha na quinta-feira.", "m2": "Recebi os arquivos de expedição e vou revê-los hoje.", "m3": "Enviei o contrato do fornecedor às Finanças para revisão.",
+      "m4": "O contrato do fornecedor de transporte chegou das Vendas. Estou a revê-lo.", "m5": "A folha de presenças chegou das Operações. Vou atualizar os dias trabalhados na folha de pagamento.",
+      "gm.h": "Painel da direção-geral", "gm.sub": "Números da empresa, aprovações e comunicados numa só página. Os números atualizam-se a partir dos separadores de arquivos e folha de pagamento.",
+      "gm.kEmps": "Funcionários", "gm.kPay": "Folha líquida", "gm.kFiles": "Arquivos por receber", "gm.kAppr": "Aprovações pendentes", "gm.cPend": "Arquivos recebidos pendentes",
+      "gm.deptH": "Os departamentos num relance", "gm.apprH": "Pedidos para a sua aprovação", "gm.approve": "Aprovar", "gm.reject": "Recusar", "gm.undo": "Desfazer",
+      "gm.sApproved": "Aprovado", "gm.sRejected": "Recusado", "gm.reqBy": "Pedido por {d}",
+      "a1": "Aprovar o orçamento do primeiro trimestre", "a2": "Comprar portáteis para a equipa de vendas", "a3": "Renovar o contrato do fornecedor de transporte", "a4": "Abrir uma vaga de analista de dados",
+      "gm.annH": "Novo comunicado", "gm.annTitle": "Título", "gm.annBody": "Mensagem", "gm.annTo": "Destinatários", "gm.annAll": "Toda a empresa", "gm.annPub": "Publicar comunicado",
+      "gm.annErr": "Indique o título e o texto do comunicado.", "gm.annList": "Comunicados publicados", "gm.annNote": "O comunicado também aparece no canal de chat correspondente.",
+      "n1t": "Fecho da folha de pagamento", "n1b": "O prazo para editar os dias trabalhados é quinta-feira às 17h.",
+      "price.h": "Uma assinatura para toda a empresa", "price.lead": "Pague uma vez por ano e use o envio de arquivos, a folha de pagamento, o chat e o painel da direção em todos os departamentos. Cerca de 16,6 $ por mês.",
+      "plan.name": "Plano anual", "price.per": "por ano", "plan.f1": "Envio de arquivos entre departamentos com acompanhamento de receção", "plan.f2": "Folha de pagamento com descontos e horas extra",
+      "plan.f3": "Um canal de chat por departamento e um geral", "plan.f4": "Painel da direção-geral: aprovações, comunicados e números", "plan.f5": "Registe o país de cada funcionário entre {c} países e regiões",
+      "buy": "Assinar agora", "co.name": "Nome da empresa", "co.mail": "E-mail de trabalho", "co.country": "País da empresa", "co.confirm": "Confirmar assinatura, 199 $",
+      "co.errName": "Indique o nome da empresa.", "co.errMail": "Indique um e-mail válido, por exemplo name@company.com.",
+      "co.done": "Pedido de assinatura de {n} ({c}) no plano anual registado. Isto é uma demonstração e nada foi cobrado.",
+      "plan.note": "Esta é uma versão inicial. O pagamento ainda não está ligado e nada é cobrado.", "footer": "O Jisr é um protótipo. Os dados desta página são de exemplo e são apagados ao recarregar.",
+      "intro.title": "Bem-vindo ao Jisr",
+      "intro.p": "O Jisr é uma plataforma para equipas remotas e empresas espalhadas por vários países. Transfere arquivos entre departamentos e acompanha a receção, calcula a folha de pagamento e os descontos, reúne o chat da equipa e dá à direção-geral um único painel de aprovações, comunicados e números.",
+      "intro.statLang": "idiomas à escolha", "intro.statCountry": "países e regiões", "intro.statPrice": "por ano", "intro.langLabel": "Idioma da interface", "intro.all": "Todos os idiomas", "intro.start": "Começar", "intro.close": "Fechar"
+    },
+    ru: {
+      "brand": "Jisr", "nav.aria": "Навигация", "nav.about": "О платформе", "nav.demo": "Попробовать", "nav.pricing": "Цена", "nav.subscribe": "Подписаться",
+      "lang.open": "Сменить язык", "lang.title": "Выберите язык", "lang.search": "Поиск языка", "lang.none": "Язык по вашему запросу не найден.", "lang.full": "Интерфейс переведён",
+      "lang.fallback": "Интерфейс пока не переведён на этот язык, поэтому он показан на английском. Ваш выбор сохранён.", "lang.count": "Языков: {n}",
+      "hero.h1": "Файлы отделов и расчёт зарплат сотрудников в одном месте",
+      "hero.p": "Платформа для удалённых команд. Отправляйте файлы между отделами и смотрите, кто их получил, считайте зарплату с удержаниями, общайтесь с каждым отделом и дайте руководству единую панель для согласований и объявлений.",
+      "hero.cta1": "Начать годовой план", "hero.cta2": "Попробовать сейчас",
+      "demo.company": "Horizon Логистика", "demo.tag": "Пример данных", "tabs.aria": "Разделы платформы",
+      "tab.files": "Передача файлов", "tab.pay": "Зарплата", "tab.chat": "Чат", "tab.gm": "Руководство",
+      "d.gm": "Руководство", "d.sales": "Продажи", "d.finance": "Финансы", "d.hr": "Кадры", "d.ops": "Операции",
+      "files.h": "Файлы между отделами", "files.sub": "Выберите отдел, чтобы увидеть входящие файлы. Цветное число показывает файлы, которые ещё не получены.",
+      "files.filterAria": "Фильтр по принимающему отделу", "files.all": "Все отделы", "files.sendH": "Отправить файл", "files.file": "Файл", "files.from": "Из отдела", "files.to": "В отдел",
+      "files.send": "Отправить файл", "files.errNoFile": "Сначала выберите файл.", "files.errSame": "Выберите принимающий отдел, отличный от отправителя.",
+      "files.pending": "Ожидает получения", "files.received": "Получено", "files.confirm": "Подтвердить получение",
+      "files.empty": "Для этого отдела нет входящих файлов. Отправьте файл через форму.", "files.route": "Из отдела «{a}» в отдел «{b}»",
+      "pay.h": "Зарплатная ведомость, ноябрь 2026", "pay.sub": "Меняйте отработанные дни, сверхурочные и премии. Итоги к выплате пересчитываются сразу.",
+      "pay.tax": "Подоходный налог %", "pay.ins": "Соцстрахование %", "pay.tGross": "Всего начислено", "pay.tDed": "Всего удержано", "pay.tNet": "К выплате",
+      "pay.cEmp": "Сотрудник", "pay.cBase": "Оклад", "pay.cDays": "Отработано дней", "pay.cOt": "Сверхурочные, ч", "pay.cBonus": "Премия", "pay.cDed": "Удержания", "pay.cNet": "К выплате",
+      "pay.formula": "Дневная ставка = оклад ÷ 30. Сверхурочный час = (дневная ставка ÷ 8) × 1,5. Удержания считаются в процентах от начисленного. Суммы в долларах США.",
+      "pay.name": "Имя сотрудника", "pay.namePh": "Амин Будьяф", "pay.dept": "Отдел", "pay.country": "Страна сотрудника", "pay.add": "Добавить сотрудника",
+      "pay.err": "Введите имя сотрудника и его оклад.", "pay.del": "Удалить",
+      "chat.h": "Чат команды", "chat.sub": "У каждого отдела свой канал, у всей компании есть общий. Ваши сообщения подписаны «Вы».", "chat.chAria": "Каналы", "chat.general": "Общий",
+      "chat.ph": "Напишите сообщение в канал", "chat.msgAria": "Сообщение", "chat.send": "Отправить", "chat.err": "Сначала напишите сообщение.", "chat.empty": "Сообщений пока нет. Напишите первое в канале «{c}».", "chat.me": "Вы",
+      "m1": "Доброе утро. Ноябрьская ведомость закрывается в четверг.", "m2": "Получил файлы по отгрузке, проверю их сегодня.", "m3": "Отправил договор с поставщиком в финансы на проверку.",
+      "m4": "Договор с поставщиком перевозок пришёл из продаж. Сейчас проверяю.", "m5": "Табель пришёл из операционного отдела. Обновлю отработанные дни в ведомости.",
+      "gm.h": "Панель руководства", "gm.sub": "Цифры компании, согласования и объявления на одной странице. Цифры обновляются из вкладок файлов и зарплаты.",
+      "gm.kEmps": "Сотрудники", "gm.kPay": "Зарплата к выплате", "gm.kFiles": "Файлы без подтверждения", "gm.kAppr": "Ждут согласования", "gm.cPend": "Входящие без подтверждения",
+      "gm.deptH": "Отделы кратко", "gm.apprH": "Запросы на ваше согласование", "gm.approve": "Согласовать", "gm.reject": "Отклонить", "gm.undo": "Отменить",
+      "gm.sApproved": "Согласовано", "gm.sRejected": "Отклонено", "gm.reqBy": "Запрос от отдела «{d}»",
+      "a1": "Утвердить бюджет на первый квартал", "a2": "Купить ноутбуки для отдела продаж", "a3": "Продлить договор с поставщиком перевозок", "a4": "Открыть вакансию аналитика данных",
+      "gm.annH": "Новое объявление", "gm.annTitle": "Заголовок", "gm.annBody": "Текст", "gm.annTo": "Кому", "gm.annAll": "Вся компания", "gm.annPub": "Опубликовать объявление",
+      "gm.annErr": "Введите заголовок и текст объявления.", "gm.annList": "Опубликованные объявления", "gm.annNote": "Объявление также появится в нужном канале чата.",
+      "n1t": "Закрытие зарплатной ведомости", "n1b": "Изменить отработанные дни можно до четверга, 17:00.",
+      "price.h": "Одна подписка на всю компанию", "price.lead": "Платите раз в год и используйте передачу файлов, расчёт зарплаты, чат и панель руководства для всех отделов и сотрудников. Это около 16,6 $ в месяц.",
+      "plan.name": "Годовой план", "price.per": "в год", "plan.f1": "Передача файлов между отделами с отслеживанием получения", "plan.f2": "Расчёт зарплаты с удержаниями и сверхурочными",
+      "plan.f3": "Канал чата для каждого отдела и общий канал", "plan.f4": "Панель руководства: согласования, объявления, цифры", "plan.f5": "Страна каждого сотрудника на выбор из {c} стран и регионов",
+      "buy": "Подписаться", "co.name": "Название компании", "co.mail": "Рабочая почта", "co.country": "Страна компании", "co.confirm": "Подтвердить подписку, 199 $",
+      "co.errName": "Введите название компании.", "co.errMail": "Введите корректную почту, например name@company.com.",
+      "co.done": "Заявка на годовую подписку для {n} ({c}) записана. Это демонстрация, деньги не списаны.",
+      "plan.note": "Это ранняя версия. Оплата ещё не подключена, деньги не списываются.", "footer": "Jisr — прототип. Данные на этой странице учебные и стираются при перезагрузке.",
+      "intro.title": "Добро пожаловать в Jisr",
+      "intro.p": "Jisr — платформа для удалённых команд и компаний, работающих в нескольких странах. Она передаёт файлы между отделами и следит за их получением, считает зарплату и удержания, собирает чат команды и даёт руководству единую панель согласований, объявлений и цифр.",
+      "intro.statLang": "языков на выбор", "intro.statCountry": "стран и регионов", "intro.statPrice": "в год", "intro.langLabel": "Язык интерфейса", "intro.all": "Все языки", "intro.start": "Начать", "intro.close": "Закрыть"
+    },
+    zh: {
+      "brand": "Jisr", "nav.aria": "导航", "nav.about": "关于", "nav.demo": "试用", "nav.pricing": "价格", "nav.subscribe": "订阅",
+      "lang.open": "切换语言", "lang.title": "选择语言", "lang.search": "搜索语言", "lang.none": "没有符合搜索的语言。", "lang.full": "界面已翻译",
+      "lang.fallback": "界面尚未翻译成这种语言，因此以英语显示。你的选择已保存。", "lang.count": "{n} 种语言",
+      "hero.h1": "部门文件与员工薪资，集中在一处",
+      "hero.p": "为远程团队打造的平台。在部门之间发送文件并查看谁已签收，计算含扣款的薪资，与每个部门聊天，并让总经理办公室在一个看板上处理审批和通知。",
+      "hero.cta1": "开始年度订阅", "hero.cta2": "立即试用",
+      "demo.company": "地平线货运公司", "demo.tag": "示例数据", "tabs.aria": "平台板块",
+      "tab.files": "文件传输", "tab.pay": "薪资", "tab.chat": "聊天", "tab.gm": "总经理办公室",
+      "d.gm": "总经理办公室", "d.sales": "销售部", "d.finance": "财务部", "d.hr": "人力资源部", "d.ops": "运营部",
+      "files.h": "部门之间的文件", "files.sub": "选择部门查看其收到的文件。彩色数字是尚未签收的文件数。",
+      "files.filterAria": "按接收部门筛选", "files.all": "所有部门", "files.sendH": "发送文件", "files.file": "文件", "files.from": "发送部门", "files.to": "接收部门",
+      "files.send": "发送文件", "files.errNoFile": "请先选择文件。", "files.errSame": "请选择与发送部门不同的接收部门。",
+      "files.pending": "待签收", "files.received": "已签收", "files.confirm": "确认签收",
+      "files.empty": "该部门没有收到的文件。请用表单发送一个。", "files.route": "从{a}到{b}",
+      "pay.h": "2026年11月薪资表", "pay.sub": "修改出勤天数、加班时数和奖金，实发金额和合计会立即更新。",
+      "pay.tax": "个人所得税 %", "pay.ins": "社会保险 %", "pay.tGross": "应发合计", "pay.tDed": "扣款合计", "pay.tNet": "实发合计",
+      "pay.cEmp": "员工", "pay.cBase": "基本工资", "pay.cDays": "出勤天数", "pay.cOt": "加班小时", "pay.cBonus": "奖金", "pay.cDed": "扣款", "pay.cNet": "实发",
+      "pay.formula": "日薪 = 基本工资 ÷ 30。加班每小时 = （日薪 ÷ 8）× 1.5。扣款按应发金额的百分比计算。金额单位为美元。",
+      "pay.name": "员工姓名", "pay.namePh": "阿明·布迪亚夫", "pay.dept": "部门", "pay.country": "员工所在国家", "pay.add": "添加员工",
+      "pay.err": "请输入员工姓名和基本工资。", "pay.del": "删除",
+      "chat.h": "团队聊天", "chat.sub": "每个部门有自己的频道，全公司有一个综合频道。你发的消息显示为“你”。", "chat.chAria": "频道", "chat.general": "综合",
+      "chat.ph": "给频道发一条消息", "chat.msgAria": "消息", "chat.send": "发送", "chat.err": "请先输入消息。", "chat.empty": "还没有消息。来{c}频道发第一条吧。", "chat.me": "你",
+      "m1": "早上好。11月薪资表将在周四截止。", "m2": "我收到了发货文件，今天会审核。", "m3": "我已把供应商合同发给财务部审核。",
+      "m4": "运输供应商合同从销售部到了，我正在审核。", "m5": "考勤表从运营部到了，我会更新薪资表里的出勤天数。",
+      "gm.h": "总经理办公室看板", "gm.sub": "公司数据、审批和通知集中在一页。数据来自文件和薪资两个标签页。",
+      "gm.kEmps": "员工数", "gm.kPay": "实发薪资", "gm.kFiles": "待签收文件", "gm.kAppr": "待审批", "gm.cPend": "待签收的来文",
+      "gm.deptH": "各部门概览", "gm.apprH": "等待你审批的申请", "gm.approve": "批准", "gm.reject": "驳回", "gm.undo": "撤销",
+      "gm.sApproved": "已批准", "gm.sRejected": "已驳回", "gm.reqBy": "申请部门：{d}",
+      "a1": "批准第一季度预算", "a2": "为销售团队采购笔记本电脑", "a3": "续签运输供应商合同", "a4": "新开数据分析师岗位",
+      "gm.annH": "新通知", "gm.annTitle": "标题", "gm.annBody": "内容", "gm.annTo": "接收范围", "gm.annAll": "全公司", "gm.annPub": "发布通知",
+      "gm.annErr": "请输入通知的标题和内容。", "gm.annList": "已发布的通知", "gm.annNote": "通知也会显示在对应的聊天频道中。",
+      "n1t": "薪资表截止", "n1b": "修改出勤天数的截止时间是周四下午5点。",
+      "price.h": "全公司一份订阅", "price.lead": "每年付费一次，所有部门和员工都可使用文件传输、薪资、聊天和总经理办公室看板。折合每月约16.6美元。",
+      "plan.name": "年度方案", "price.per": "每年", "plan.f1": "部门间文件传输，可跟踪签收", "plan.f2": "含扣款和加班的薪资计算",
+      "plan.f3": "每个部门一个聊天频道，另有综合频道", "plan.f4": "总经理办公室看板：审批、通知、数据", "plan.f5": "可从{c}个国家和地区中为每位员工登记所在国家",
+      "buy": "立即订阅", "co.name": "公司名称", "co.mail": "工作邮箱", "co.country": "公司所在国家", "co.confirm": "确认订阅，199美元",
+      "co.errName": "请输入公司名称。", "co.errMail": "请输入有效的邮箱，例如 name@company.com。",
+      "co.done": "已记录{n}（{c}）的年度方案订阅申请。这只是演示，没有扣款。",
+      "plan.note": "这是早期版本。支付尚未接入，不会扣款。", "footer": "Jisr 是原型。本页数据均为示例，刷新后会清除。",
+      "intro.title": "欢迎使用 Jisr",
+      "intro.p": "Jisr 是为远程团队和跨国公司打造的平台。它在部门之间传输文件并跟踪签收，计算员工薪资和扣款，汇集团队聊天，并让总经理办公室在一个看板上掌握审批、通知和数据。",
+      "intro.statLang": "种语言可选", "intro.statCountry": "个国家和地区", "intro.statPrice": "每年", "intro.langLabel": "界面语言", "intro.all": "所有语言", "intro.start": "开始体验", "intro.close": "关闭"
+    }
+  };
+
+  var LANGS = ["af","sq","am","ar","hy","as","az","eu","be","bn","bs","bg","my","ca","ceb","zh","hr","cs","da","nl","en","et","fi","fr","gl","ka","de","el","gu","ht","ha","he","hi","hu","is","ig","id","ga","it","ja","jv","kn","kk","km","rw","ko","ku","ky","lo","lv","ln","lt","lb","mk","mg","ms","ml","mt","mi","mr","mn","ne","nb","or","om","ps","fa","pl","pt","pa","qu","ro","ru","sm","gd","sr","sn","sd","si","sk","sl","so","es","su","sw","sv","tl","tg","ta","tt","te","th","ti","tr","tk","uk","ur","ug","uz","vi","cy","xh","yi","yo","zu","ab","aa","ak","an","ast","ay","ba","bm","bo","br","ce","ch","co","cv","dv","dz","ee","fo","fj","ff","fy","gn","gv","ie","io","iu","kl","ks","kw","la","lg","li","mh","nd","ng","nn","nr","nv","ny","oc","os","pi","rm","rn","sa","sc","se","sg","ss","st","tn","to","ts","tw","ty","ve","vo","wa","wo","yue","bho","ckb","fil","haw","mni","nso","sah","syr","tzm","kab","ace","ban","bin","bug","chr","gez","kok","mai","sat","dsb","hsb","fur","gsw","nds","scn","lad","ady","ain","ale","alt","arn","arp","awa","bal","bej"];
+  var CC = "AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW XK".split(" ");
+  var KEYS = ["gm", "sales", "finance", "hr", "ops"];
+
+  var ui = "ar", pref = "ar";
+  var rdn = null, ldn = null, nativeCache = {};
+
+  function t(k, v) {
+    var s = I18N[ui] && I18N[ui][k];
+    if (s == null) s = I18N.en[k];
+    if (s == null) return k;
+    if (v) for (var x in v) s = s.split("{" + x + "}").join(v[x]);
+    return s;
+  }
+  function $(id) { return document.getElementById(id); }
+  function sget(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function sset(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function h(tag, attrs) {
+    var el = document.createElement(tag);
+    attrs = attrs || {};
+    for (var k in attrs) {
+      var v = attrs[k];
+      if (k === "class") el.className = v;
+      else if (k.indexOf("on") === 0) el.addEventListener(k.slice(2), v);
+      else if (v !== false && v != null) el.setAttribute(k, v === true ? "" : v);
+    }
+    for (var i = 2; i < arguments.length; i++) {
+      [].concat(arguments[i]).forEach(function (c) {
+        if (c == null || c === false) return;
+        el.append(c.nodeType ? c : document.createTextNode(c));
+      });
+    }
+    return el;
+  }
+  function two(n) { return String(n).padStart(2, "0"); }
+  function nowDate() { var d = new Date(); return two(d.getDate()) + "/" + two(d.getMonth() + 1); }
+  function nowTime() { var d = new Date(); return two(d.getHours()) + ":" + two(d.getMinutes()); }
+  function money(n) { return "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function money0(n) { return "$" + n.toLocaleString("en-US", { maximumFractionDigits: 0 }); }
+
+  function regionName(c) { try { rdn = rdn || new Intl.DisplayNames([ui], { type: "region" }); return rdn.of(c) || c; } catch (e) { return c; } }
+  function langName(c) { try { ldn = ldn || new Intl.DisplayNames([ui], { type: "language" }); return ldn.of(c) || c; } catch (e) { return c; } }
+  function nativeName(c) {
+    if (nativeCache[c]) return nativeCache[c];
+    var r; try { r = new Intl.DisplayNames([c], { type: "language" }).of(c); } catch (e) {}
+    nativeCache[c] = r || c;
+    return nativeCache[c];
+  }
+
+  /* data */
+  var files = [
+    { id: "2026-0413", name: "annual-report-draft.pdf", size: "2.4 MB", from: "finance", to: "gm", status: "pending", date: "06/11" },
+    { id: "2026-0412", name: "supplier-contract.pdf", size: "1.2 MB", from: "sales", to: "finance", status: "pending", date: "05/11" },
+    { id: "2026-0411", name: "attendance-oct.xlsx", size: "340 KB", from: "ops", to: "hr", status: "pending", date: "04/11" },
+    { id: "2026-0409", name: "port-invoice.pdf", size: "860 KB", from: "ops", to: "finance", status: "received", date: "03/11" },
+    { id: "2026-0406", name: "quote-new-client.docx", size: "210 KB", from: "finance", to: "sales", status: "received", date: "02/11" }
+  ];
+  var counter = 413;
+  var filter = "all";
+  var rates = { tax: 10, ins: 9 };
+  var emps = [
+    { n: "Sara Benali", d: "finance", c: "DZ", base: 3200, days: 30, ot: 4, bonus: 0 },
+    { n: "Karim Merzouk", d: "sales", c: "FR", base: 2800, days: 28, ot: 0, bonus: 300 },
+    { n: "Leila Haddad", d: "hr", c: "AE", base: 2500, days: 30, ot: 2, bonus: 0 },
+    { n: "Yacine Kassimi", d: "ops", c: "DZ", base: 2200, days: 26, ot: 10, bonus: 0 },
+    { n: "Mouna Cherif", d: "sales", c: "TN", base: 3000, days: 30, ot: 0, bonus: 150 },
+    { n: "Nadia Bouzid", d: "gm", c: "DZ", base: 5500, days: 30, ot: 0, bonus: 0 }
+  ];
+  var cells = [];
+  var chat = {
+    general: [{ a: "Mouna Cherif", t: "09:12", k: "m1" }, { a: "Yacine Kassimi", t: "09:20", k: "m2" }],
+    gm: [], sales: [{ a: "Karim Merzouk", t: "08:50", k: "m3" }], finance: [{ a: "Sara Benali", t: "10:05", k: "m4" }],
+    hr: [{ a: "Leila Haddad", t: "09:40", k: "m5" }], ops: []
+  };
+  var chan = "general";
+  var approvals = [
+    { k: "a1", d: "finance", amt: 42000, s: "pending" },
+    { k: "a2", d: "sales", amt: 9600, s: "pending" },
+    { k: "a3", d: "ops", amt: 18500, s: "pending" },
+    { k: "a4", d: "hr", amt: 0, s: "pending" }
+  ];
+  var anns = [{ tk: "n1t", bk: "n1b", to: "all", date: "05/11" }];
+
+  /* i18n */
+  function applyI18n() {
+    document.querySelectorAll("[data-i]").forEach(function (el) { el.textContent = t(el.getAttribute("data-i")); });
+    document.querySelectorAll("[data-ph]").forEach(function (el) { el.placeholder = t(el.getAttribute("data-ph")); });
+    document.querySelectorAll("[data-al]").forEach(function (el) { el.setAttribute("aria-label", t(el.getAttribute("data-al"))); });
+    document.documentElement.lang = ui;
+    document.documentElement.dir = ui === "ar" ? "rtl" : "ltr";
+    document.title = t("brand");
+    $("lang-code").textContent = pref.toUpperCase();
+    $("st-lang").textContent = LANGS.length;
+    $("st-cc").textContent = CC.length;
+    $("plan-f5").textContent = t("plan.f5", { c: CC.length });
+    $("lang-count").textContent = t("lang.count", { n: LANGS.length });
+  }
+  function fillDept(sel) {
+    var v = sel.value;
+    sel.replaceChildren();
+    KEYS.forEach(function (k) { sel.append(h("option", { value: k }, t("d." + k))); });
+    if (v) sel.value = v;
+  }
+  function fillAnnTo() {
+    var sel = $("ann-to"), v = sel.value || "all";
+    sel.replaceChildren(h("option", { value: "all" }, t("gm.annAll")));
+    KEYS.forEach(function (k) { sel.append(h("option", { value: k }, t("d." + k))); });
+    sel.value = v;
+  }
+  function fillCountry(sel, def) {
+    var v = sel.value || def;
+    var col = new Intl.Collator(ui);
+    var arr = CC.map(function (c) { return { c: c, n: regionName(c) }; }).sort(function (a, b) { return col.compare(a.n, b.n); });
+    sel.replaceChildren();
+    arr.forEach(function (x) { sel.append(h("option", { value: x.c }, x.n)); });
+    sel.value = v;
+  }
+  function showNotice(txt) { $("notice-t").textContent = txt; $("notice").hidden = false; }
+  function setLang(code) {
+    pref = code;
+    ui = I18N[code] ? code : "en";
+    rdn = null; ldn = null;
+    sset("jisr-lang", code);
+    applyI18n();
+    ["from", "to", "e-dept"].forEach(function (id) { fillDept($(id)); });
+    fillAnnTo();
+    fillCountry($("e-country"), "DZ");
+    fillCountry($("co-country"), "DZ");
+    renderFiles(); buildPay(); renderChat(); renderGMLists(); renderGMNumbers(); renderQuick();
+    if (!$("lang-ov").hidden) renderLangList();
+    if (I18N[code]) $("notice").hidden = true; else showNotice(t("lang.fallback"));
+  }
+
+  /* overlays */
+  var stack = [];
+  function openOv(id, opener) {
+    var ov = $(id);
+    ov.hidden = false;
+    stack.push({ id: id, opener: opener || document.activeElement });
+    document.documentElement.classList.add("lock");
+    var f = ov.querySelector("[data-focus]") || ov.querySelector("button");
+    if (f) f.focus();
+  }
+  function closeOv(id) {
+    $(id).hidden = true;
+    var i = -1;
+    stack.forEach(function (s, n) { if (s.id === id) i = n; });
+    var s = i > -1 ? stack.splice(i, 1)[0] : null;
+    if (!stack.length) document.documentElement.classList.remove("lock");
+    if (s && s.opener && s.opener.focus) s.opener.focus();
+    if (id === "intro") sset("jisr-intro", "1");
+  }
+  document.addEventListener("keydown", function (e) {
+    if (!stack.length) return;
+    var top = stack[stack.length - 1];
+    if (e.key === "Escape") { closeOv(top.id); return; }
+    if (e.key !== "Tab") return;
+    var f = [].slice.call($(top.id).querySelectorAll("button, input, select, a[href]")).filter(function (el) { return !el.disabled && el.offsetParent !== null; });
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+  ["intro", "lang-ov"].forEach(function (id) {
+    $(id).addEventListener("mousedown", function (e) { if (e.target === $(id)) closeOv(id); });
+  });
+  $("intro-x").addEventListener("click", function () { closeOv("intro"); });
+  $("intro-start").addEventListener("click", function () { closeOv("intro"); });
+  $("lang-x").addEventListener("click", function () { closeOv("lang-ov"); });
+  $("about-btn").addEventListener("click", function () { openOv("intro", this); });
+  $("notice-x").addEventListener("click", function () { $("notice").hidden = true; });
+
+  /* language picker */
+  var FULL = {}; Object.keys(I18N).forEach(function (k) { FULL[k] = 1; });
+  function openLang(opener) { $("lang-q").value = ""; renderLangList(); openOv("lang-ov", opener); }
+  function chooseLang(c) { setLang(c); closeOv("lang-ov"); }
+  function renderLangList() {
+    var q = $("lang-q").value.trim().toLowerCase();
+    var col = new Intl.Collator(ui);
+    var arr = LANGS.map(function (c) { return { c: c, n: langName(c), a: nativeName(c) }; });
+    arr.sort(function (x, y) { return col.compare(x.n, y.n); });
+    var shown = arr.filter(function (x) { return !q || x.n.toLowerCase().indexOf(q) > -1 || x.a.toLowerCase().indexOf(q) > -1 || x.c.indexOf(q) === 0; });
+    var list = $("lang-list");
+    list.replaceChildren();
+    $("lang-none").hidden = shown.length > 0;
+    shown.forEach(function (x) {
+      list.append(h("li", {}, h("button", { class: "lang-item", type: "button", "aria-pressed": pref === x.c ? "true" : "false", onclick: function () { chooseLang(x.c); } },
+        h("span", { class: "ln" }, x.a),
+        h("span", { class: "lm" }, x.n),
+        FULL[x.c] ? h("span", { class: "pill received" }, t("lang.full")) : null,
+        h("span", { class: "lc" }, x.c))));
+    });
+  }
+  $("lang-btn").addEventListener("click", function () { openLang(this); });
+  $("lang-q").addEventListener("input", renderLangList);
+  function renderQuick() {
+    var q = $("quick");
+    var had = q.contains(document.activeElement);
+    q.replaceChildren();
+    [["ar", "العربية"], ["en", "English"], ["fr", "Français"]].forEach(function (p) {
+      q.append(h("button", { class: "chip", type: "button", "aria-pressed": pref === p[0] ? "true" : "false", onclick: function () { setLang(p[0]); } }, p[1]));
+    });
+    q.append(h("button", { class: "chip", type: "button", onclick: function () { openLang(this); } }, t("intro.all") + " (" + LANGS.length + ")"));
+    if (had) { var b = q.querySelector('[aria-pressed="true"]'); if (b) b.focus(); }
+  }
+
+  /* tabs */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  function showTab(name) {
+    tabs.forEach(function (tb) {
+      var on = tb.dataset.tab === name;
+      tb.setAttribute("aria-selected", on ? "true" : "false");
+      tb.tabIndex = on ? 0 : -1;
+      $("panel-" + tb.dataset.tab).hidden = !on;
+    });
+    if (name === "chat") scrollMsgs();
+  }
+  tabs.forEach(function (tb, i) {
+    tb.addEventListener("click", function () { showTab(tb.dataset.tab); });
+    tb.addEventListener("keydown", function (e) {
+      var rtl = document.documentElement.dir === "rtl";
+      var d = e.key === "ArrowLeft" ? (rtl ? 1 : -1) : e.key === "ArrowRight" ? (rtl ? -1 : 1) : 0;
+      if (!d) return;
+      var n = tabs[(i + d + tabs.length) % tabs.length];
+      n.focus(); showTab(n.dataset.tab);
+    });
+  });
+
+  /* files */
+  function fmtSize(b) { return b < 1048576 ? Math.max(1, Math.round(b / 1024)) + " KB" : (b / 1048576).toFixed(1) + " MB"; }
+  function renderFiles() {
+    var chips = $("chips");
+    chips.replaceChildren();
+    function chip(key, label, count) {
+      chips.append(h("button", { class: "chip", type: "button", "aria-pressed": filter === key ? "true" : "false", onclick: function () { filter = key; renderFiles(); } },
+        label, count ? h("span", { class: "count" }, String(count)) : null));
+    }
+    chip("all", t("files.all"), 0);
+    KEYS.forEach(function (k) {
+      var c = files.filter(function (f) { return f.to === k && f.status === "pending"; }).length;
+      chip(k, t("d." + k), c);
+    });
+    var list = $("files");
+    list.replaceChildren();
+    var shown = files.filter(function (f) { return filter === "all" || f.to === filter; });
+    if (!shown.length) list.append(h("li", { class: "empty" }, t("files.empty")));
+    shown.forEach(function (f) {
+      var side = h("div", { class: "file-side" }, h("span", { class: "pill " + f.status }, t(f.status === "pending" ? "files.pending" : "files.received")));
+      if (f.status === "pending") {
+        side.append(h("button", { class: "btn small", type: "button", onclick: function () { f.status = "received"; renderFiles(); } }, t("files.confirm")));
+      }
+      list.append(h("li", { class: "file" },
+        h("div", {},
+          h("div", { class: "file-name" }, f.name),
+          h("div", { class: "file-meta" },
+            h("span", {}, t("files.route", { a: t("d." + f.from), b: t("d." + f.to) })),
+            h("span", { class: "mono" }, f.size),
+            h("span", { class: "mono" }, f.date),
+            h("span", { class: "ref" }, "#" + f.id))),
+        side));
+    });
+    renderGMNumbers();
+  }
+  $("file-input").addEventListener("change", function () { $("send-err").textContent = ""; });
+  $("send-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var err = $("send-err"); err.textContent = "";
+    var f = $("file-input").files[0];
+    var from = $("from").value, to = $("to").value;
+    if (!f) { err.textContent = t("files.errNoFile"); return; }
+    if (from === to) { err.textContent = t("files.errSame"); return; }
+    counter += 1;
+    files.unshift({ id: "2026-0" + counter, name: f.name, size: fmtSize(f.size), from: from, to: to, status: "pending", date: nowDate() });
+    $("file-input").value = "";
+    filter = to;
+    renderFiles();
+  });
+
+  /* payroll */
+  function calc(e) {
+    var daily = e.base / 30;
+    var gross = daily * e.days + (daily / 8) * 1.5 * e.ot + e.bonus;
+    var ded = gross * (rates.tax + rates.ins) / 100;
+    return { gross: gross, ded: ded, net: gross - ded };
+  }
+  function updatePay() {
+    var g = 0, d = 0, n = 0;
+    emps.forEach(function (e, i) {
+      var r = calc(e);
+      cells[i].ded.textContent = money(r.ded);
+      cells[i].net.textContent = money(r.net);
+      g += r.gross; d += r.ded; n += r.net;
+    });
+    $("t-gross").textContent = money(g);
+    $("t-ded").textContent = money(d);
+    $("t-net").textContent = money(n);
+    renderGMNumbers();
+  }
+  var COLKEY = { days: "pay.cDays", ot: "pay.cOt", bonus: "pay.cBonus" };
+  function numInput(e, key, min, max, step) {
+    var inp = h("input", { type: "number", min: min, max: max, step: step, value: String(e[key]), "aria-label": e.n + " " + t(COLKEY[key]) });
+    inp.addEventListener("input", function () {
+      var v = parseFloat(inp.value);
+      if (isNaN(v)) v = 0;
+      e[key] = Math.min(max, Math.max(min, v));
+      updatePay();
+    });
+    return inp;
+  }
+  function buildPay() {
+    var body = $("pay-body");
+    body.replaceChildren();
+    cells = [];
+    emps.forEach(function (e, i) {
+      var ded = h("td", { class: "num" }), net = h("td", { class: "num net" });
+      cells.push({ ded: ded, net: net });
+      body.append(h("tr", {},
+        h("td", {}, e.n, h("span", { class: "dept" }, t("d." + e.d))),
+        h("td", {}, regionName(e.c)),
+        h("td", { class: "num" }, money(e.base)),
+        h("td", { class: "num" }, numInput(e, "days", 0, 30, 1)),
+        h("td", { class: "num" }, numInput(e, "ot", 0, 200, 1)),
+        h("td", { class: "num" }, numInput(e, "bonus", 0, 100000, 50)),
+        ded, net,
+        h("td", {}, h("button", { class: "btn small quiet", type: "button", "aria-label": t("pay.del") + " " + e.n, onclick: function () { emps.splice(i, 1); buildPay(); } }, t("pay.del")))));
+    });
+    updatePay();
+  }
+  function rateInput(id, key, max) {
+    $(id).addEventListener("input", function () {
+      var v = parseFloat($(id).value);
+      rates[key] = isNaN(v) ? 0 : Math.min(max, Math.max(0, v));
+      updatePay();
+    });
+  }
+  rateInput("rate-tax", "tax", 60); rateInput("rate-ins", "ins", 40);
+  $("add-form").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var err = $("add-err"); err.textContent = "";
+    var name = $("e-name").value.trim();
+    var base = parseFloat($("e-base").value);
+    if (!name || !(base > 0)) { err.textContent = t("pay.err"); return; }
+    emps.push({ n: name, d: $("e-dept").value, c: $("e-country").value, base: base, days: 30, ot: 0, bonus: 0 });
+    $("e-name").value = ""; $("e-base").value = "";
+    buildPay();
+  });
+
+  /* chat */
+  function chanLabel(k) { return k === "general" ? t("chat.general") : t("d." + k); }
+  function scrollMsgs() { var m = $("msgs"); m.scrollTop = m.scrollHeight; }
+  function renderChat() {
+    var cs = $("channels"); cs.replaceChildren();
+    ["general"].concat(KEYS).forEach(function (k) {
+      cs.append(h("button", { class: "channel", type: "button", "aria-pressed": chan === k ? "true" : "false", onclick: function () { chan = k; renderChat(); } }, chanLabel(k)));
+    });
+    var box = $("msgs"); box.replaceChildren();
+    if (!chat[chan].length) box.append(h("p", { class: "empty" }, t("chat.empty", { c: chanLabel(chan) })));
+    chat[chan].forEach(function (x) {
+      box.append(h("div", { class: "msg" + (x.mine ? " mine" : "") },
+        h("div", { class: "who" }, h("span", {}, x.ak ? t(x.ak) : x.a), h("time", {}, x.t)),
+        h("div", {}, x.k ? t(x.k) : x.m)));
+    });
+    scrollMsgs();
+  }
+  $("chat-input").addEventListener("input", function () { $("chat-err").textContent = ""; });
+  $("chat-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = $("chat-input").value.trim();
+    if (!v) { $("chat-err").textContent = t("chat.err"); return; }
+    chat[chan].push({ ak: "chat.me", t: nowTime(), m: v, mine: true });
+    $("chat-input").value = "";
+    renderChat();
+  });
+
+  /* general management */
+  function renderGMNumbers() {
+    var net = 0;
+    emps.forEach(function (e) { net += calc(e).net; });
+    $("k-emps").textContent = emps.length;
+    $("k-pay").textContent = money(net);
+    $("k-files").textContent = files.filter(function (f) { return f.status === "pending"; }).length;
+    $("k-appr").textContent = approvals.filter(function (a) { return a.s === "pending"; }).length;
+    var body = $("gm-body");
+    body.replaceChildren();
+    KEYS.forEach(function (k) {
+      var list = emps.filter(function (e) { return e.d === k; });
+      var sum = 0; list.forEach(function (e) { sum += calc(e).net; });
+      var pend = files.filter(function (f) { return f.to === k && f.status === "pending"; }).length;
+      body.append(h("tr", {}, h("td", {}, t("d." + k)), h("td", { class: "num" }, String(list.length)), h("td", { class: "num" }, money(sum)), h("td", { class: "num" }, String(pend))));
+    });
+  }
+  function setAppr(a, s) { a.s = s; renderGMLists(); renderGMNumbers(); }
+  function renderGMLists() {
+    var list = $("appr");
+    list.replaceChildren();
+    approvals.forEach(function (a) {
+      var side = h("div", { class: "file-side" });
+      if (a.s === "pending") {
+        side.append(
+          h("button", { class: "btn small primary", type: "button", onclick: function () { setAppr(a, "approved"); } }, t("gm.approve")),
+          h("button", { class: "btn small", type: "button", onclick: function () { setAppr(a, "rejected"); } }, t("gm.reject")));
+      } else {
+        side.append(
+          h("span", { class: "pill " + a.s }, t(a.s === "approved" ? "gm.sApproved" : "gm.sRejected")),
+          h("button", { class: "btn small quiet", type: "button", onclick: function () { setAppr(a, "pending"); } }, t("gm.undo")));
+      }
+      list.append(h("li", { class: "file" },
+        h("div", {},
+          h("div", { class: "file-name" }, t(a.k)),
+          h("div", { class: "file-meta" }, h("span", {}, t("gm.reqBy", { d: t("d." + a.d) })), a.amt ? h("span", { class: "mono" }, money0(a.amt)) : null)),
+        side));
+    });
+    var al = $("ann-list");
+    al.replaceChildren();
+    anns.forEach(function (a) {
+      al.append(h("li", { class: "file one" },
+        h("div", {},
+          h("div", { class: "file-name" }, a.tk ? t(a.tk) : a.title),
+          h("div", { class: "ann-body" }, a.bk ? t(a.bk) : a.body),
+          h("div", { class: "file-meta" }, h("span", {}, a.to === "all" ? t("gm.annAll") : t("d." + a.to)), h("span", { class: "mono" }, a.date)))));
+    });
+  }
+  $("ann-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var err = $("ann-err"); err.textContent = "";
+    var title = $("ann-title").value.trim(), body = $("ann-body").value.trim(), to = $("ann-to").value;
+    if (!title || !body) { err.textContent = t("gm.annErr"); return; }
+    anns.unshift({ title: title, body: body, to: to, date: nowDate() });
+    chat[to === "all" ? "general" : to].push({ ak: "d.gm", t: nowTime(), m: title + ": " + body });
+    $("ann-title").value = ""; $("ann-body").value = "";
+    renderGMLists(); renderChat();
+  });
+
+  /* checkout (demo only) */
+  $("buy").addEventListener("click", function () {
+    var c = $("checkout");
+    c.hidden = !c.hidden;
+    $("buy").setAttribute("aria-expanded", c.hidden ? "false" : "true");
+    if (!c.hidden) $("co-name").focus();
+  });
+  $("buy-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("co-name").value.trim(), mail = $("co-mail").value.trim();
+    var err = $("buy-err"); err.textContent = "";
+    if (!name) { err.textContent = t("co.errName"); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { err.textContent = t("co.errMail"); return; }
+    var done = $("buy-done");
+    done.textContent = t("co.done", { n: name, c: regionName($("co-country").value) });
+    done.hidden = false;
+    $("buy-form").hidden = true;
+  });
+
+  /* start */
+  var start = sget("jisr-lang");
+  if (!start || LANGS.indexOf(start) < 0) {
+    var nl = (navigator.language || "ar").toLowerCase();
+    var pc = nl.split("-")[0];
+    start = I18N[pc] ? pc : "en";
+  }
+  setLang(start);
+  $("from").value = "sales"; $("to").value = "finance";
+  if (!sget("jisr-intro")) openOv("intro", $("about-btn"));
+})();
+</script>
+</body>
+</html>
